@@ -145,7 +145,7 @@ The only reasons a pull request should be closed and resubmitted are as follows:
    Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
 ## NuGet
-Currently AppVeyor is building and releasing NuGets on every merge to the release branch. All PRs should be merged into master and then a PR from master into release when new NuGets are needed. Avoid PRs from feature branches directly to the release branch.
+Currently AppVeyor is building and releasing NuGets on every merge to the release branch. All PRs should be merged into master and then a PR from master into release when new NuGets are needed. Avoid PRs from feature branches directly to the release branch. 
 
 ## Other general information
 If you reformat code or hit core functionality without an approval from a person on the IntelliTect Team,
