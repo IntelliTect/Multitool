@@ -18,6 +18,8 @@ namespace IntelliTect.Utilities.Security
             if (principal == null) throw new ArgumentNullException(nameof(principal));
 
             Claim claim = principal.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim != null) return claim.Value;
+            claim = principal.FindFirst(ClaimTypes.Name);
             return claim?.Value;
         }
 

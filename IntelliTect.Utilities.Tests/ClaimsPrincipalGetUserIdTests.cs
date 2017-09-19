@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Security.Principal;
 using IntelliTect.Utilities.Security;
 using Xunit;
 
@@ -13,6 +14,22 @@ namespace IntelliTect.Utilities.Tests
             ClaimsPrincipal sut = null;
 
             Assert.Throws<ArgumentNullException>(() => sut.GetUserId());
+        }
+
+        [Fact]
+        public void WhenClaimsPrincipalHasNoProperty_Should_ReturnNull()
+        {
+            ClaimsPrincipal sut = new ClaimsPrincipal();
+
+            Assert.Null(sut.GetUserId());
+        }
+
+        [Fact]
+        public void WhenClaimsPrincipalHasId_Should_ReturnString()
+        {
+            ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Taki The Frog"), new []{ "Bar" } );
+
+            Assert.Equal("Taki The Frog", sut.GetUserId());
         }
     }
 }
