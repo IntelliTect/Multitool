@@ -7,9 +7,13 @@ Libraries of useful C# things, focused on shipping Nuget packages.
 
 Libraries
 =========
+### IntelliTect.Utilities: [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
 
-* IntelliTect.Utilities [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
+### Namespaces within this library:
+* IntelliTect.Utilities 
     - AssemblyInfo: Gets an assembly's linker date/time.
+* IntelliTect.Utilities.Security
+    - ClaimsPrincipalExtensions: Extention methods to get a user ID and roles.
 
 Contributing
 ============
@@ -25,6 +29,7 @@ Contributing
   * [Prepare commits](#prepare-commits)
   * [Submit pull request](#Submit-pull-request)
   * [Respond to feedback on pull request](#respond-to-feedback-on-pull-request)
+* [NuGet](#nuget)
 * [Other general information](#other-general-information)
 * [Acknowledgement](#acknowledgement)
 
@@ -142,6 +147,9 @@ The only reasons a pull request should be closed and resubmitted are as follows:
  * When the pull request is targeting the wrong branch (this doesn't happen as often).
  * When there are updates made to the original by someone other than the original contributor.
    Then the old branch is closed with a note on the newer branch this supersedes #github_number.
+
+## NuGet
+Currently AppVeyor is building and releasing NuGets on every merge to the release branch. All PRs should be merged into master and then a PR from master into release when new NuGets are needed. Avoid PRs from feature branches directly to the release branch.
 
 ## Other general information
 If you reformat code or hit core functionality without an approval from a person on the IntelliTect Team,
