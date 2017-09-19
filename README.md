@@ -7,9 +7,13 @@ Libraries of useful C# things, focused on shipping Nuget packages.
 
 Libraries
 =========
+### IntelliTect.Utilities: [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
 
-* IntelliTect.Utilities [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
+### Namespaces within this library:
+* IntelliTect.Utilities 
     - AssemblyInfo: Gets an assembly's linker date/time.
+* IntelliTect.Utilities.Security
+    - ClaimsPrincipalExtensions: Extention methods to get a user ID and roles.
 
 Contributing
 ============
