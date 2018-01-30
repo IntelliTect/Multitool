@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.Utilities", "IntelliTect.Utilities\IntelliTect.Utilities.csproj", "{4AEDF7B5-8FD1-4361-B230-173646A0D20C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelliTect.Utilities.Tests", "IntelliTect.Utilities.Tests\IntelliTect.Utilities.Tests.csproj", "{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.Utilities.Tests", "IntelliTect.Utilities.Tests\IntelliTect.Utilities.Tests.csproj", "{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelliTect.Diagnostics", "IntelliTect.Diagnostics\IntelliTect.Diagnostics.csproj", "{C9328CC0-9F73-41AB-BF6A-DA3B70360B21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelliTect.Diagnostics.Tests", "IntelliTect.Diagnostics.Tests\IntelliTect.Diagnostics.Tests.csproj", "{5F4245DB-65F7-44F9-B04A-6B28A675E5D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9328CC0-9F73-41AB-BF6A-DA3B70360B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9328CC0-9F73-41AB-BF6A-DA3B70360B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9328CC0-9F73-41AB-BF6A-DA3B70360B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9328CC0-9F73-41AB-BF6A-DA3B70360B21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F4245DB-65F7-44F9-B04A-6B28A675E5D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F4245DB-65F7-44F9-B04A-6B28A675E5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F4245DB-65F7-44F9-B04A-6B28A675E5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4245DB-65F7-44F9-B04A-6B28A675E5D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
