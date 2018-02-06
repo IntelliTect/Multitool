@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
+    <PackageReleaseNotes>Added ConsoleProcess extension.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
