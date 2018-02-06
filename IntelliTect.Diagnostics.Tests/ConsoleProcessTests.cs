@@ -8,7 +8,9 @@ namespace IntelliTect.Diagnostics.Tests
     public class ConsoleProcessTests
     {
         [Fact]
+
         public void IsProcessIsProcessAlreadyRunning_NotRunning_False()
+
         {
             Assert.False(ConsoleProcess.IsProcessAlreadyRunning("notavalidprocess.exe"));
         }

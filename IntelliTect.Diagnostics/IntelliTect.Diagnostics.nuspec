@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package >
   <metadata>
     <id>$id$</id>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/IntelliTect/IntelliTect</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added ClaimsPrincipal extensions.</releaseNotes>
-    <copyright>Copyright 2018</copyright>
+    <releaseNotes>Added ConsoleProcess extension.</releaseNotes>
+    <copyright>Copyright 2018 IntelliTect</copyright>
     <tags>IntelliTect</tags>
   </metadata>
 </package>
