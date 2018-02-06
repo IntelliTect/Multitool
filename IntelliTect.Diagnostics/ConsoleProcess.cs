@@ -2,12 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace IntelliTect.Diagnostics
 {
-    public class ConsoleProcess : Process
+    public sealed class ConsoleProcess : Process
     {
         [Flags]
         public enum ConsoleApplicationStartOptions
@@ -15,80 +14,103 @@ namespace IntelliTect.Diagnostics
             DoNotStartIfAlreadyRunning = 0x1
         }
 
-        protected ConsoleProcess()
+
+        private ConsoleProcess()
         {
-            
         }
 
-        /*public static string GetCommandLine(this Process process)
+        private ManualResetEventSlim OutputResetEvent { get; } = new ManualResetEventSlim(false);
+
+        protected override void Dispose(bool disposing)
         {
-            var commandLine = new StringBuilder(process.MainModule.FileName);
+            base.Dispose(disposing);
+            if (disposing) OutputResetEvent?.Dispose();
+        }
 
-            commandLine.Append(" ");
-            using (var searcher =
-                new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + process.Id))
-            {
-                foreach (var @object in searcher.Get())
-                {
-                    commandLine.Append(@object["CommandLine"]);
-                    commandLine.Append(" ");
-                }
-            }
-
-            return commandLine.ToString();
-        }*/
 
         public static bool IsProcessAlreadyRunning(string fileName)
         {
-            return Process.GetProcesses().Any(
+            return GetProcesses().Any(
                 item => string.Equals(item.ProcessName, Path.GetFileNameWithoutExtension(fileName),
                     StringComparison.OrdinalIgnoreCase));
         }
 
-        public static ConsoleProcess StartConsoleProcess( string fileName, string arguments = null, ConsoleApplicationStartOptions options = default,
+        public static ConsoleProcess StartConsoleProcess(string fileName, string expectedOutput,
+            string arguments = null,
+            ConsoleApplicationStartOptions options = default,
             string workingDirectory = null)
         {
-            var cliResetEvent = new ManualResetEventSlim();
             if (options.HasFlag(ConsoleApplicationStartOptions.DoNotStartIfAlreadyRunning))
-                if (!Process.GetProcesses().Any(
+                if (!GetProcesses().Any(
                     item => string.Equals(item.ProcessName, fileName, StringComparison.OrdinalIgnoreCase)))
                     throw new ArgumentException(
                         $"The process '{fileName}' with arguments '{arguments}' is already running.");
+
             // The process isn't already running.
             var process = new ConsoleProcess
             {
                 StartInfo = new ProcessStartInfo(fileName, arguments) {UseShellExecute = false}
             };
             if (string.IsNullOrWhiteSpace(workingDirectory) == false)
-            {
                 process.StartInfo.WorkingDirectory = workingDirectory;
-            }
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
-
-            process.OutputDataReceived += OnStandardOutput;
-            process.ErrorDataReceived += OnStandardError;
-
+            process.OutputDataReceived += OnDataReceived;
+            process.ErrorDataReceived += OnDataReceived;
 
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            cliResetEvent.Wait(10000);
 
             return process;
+
+            void OnDataReceived(object sender, DataReceivedEventArgs args)
+            {
+                if (string.IsNullOrWhiteSpace(args.Data)) return;
+
+                if (args.Data.IndexOf(expectedOutput, StringComparison.OrdinalIgnoreCase) >= 0)
+                    process.OutputResetEvent.Set();
+            }
         }
 
-        public void WaitForOutput(string text)
+        /// <summary>
+        ///     Blocks and waits for the expected output until a timeout is reached or cancellation is requested.
+        /// </summary>
+        /// <param name="timeOut"></param>
+        /// <param name="token"></param>
+        /// <returns>True if the output is found.</returns>
+        /// <remarks>Will not re-throw a <see cref="OperationCanceledException" />.</remarks>
+        public bool WaitForOutput(TimeSpan timeOut, CancellationToken token)
         {
-
+            try
+            {
+                return OutputResetEvent.Wait(timeOut, token);
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
         }
 
-        private  void OnStandardError(object sender, DataReceivedEventArgs data)
+        /// <summary>
+        ///     Blocks and waits for the expected output until a timeout is reached.
+        /// </summary>
+        /// <param name="timeOut"></param>
+        /// <returns>True if the output is found.</returns>
+        public bool WaitForOutput(TimeSpan timeOut)
         {
+            return OutputResetEvent.Wait(timeOut);
         }
 
-        private  void OnStandardOutput(object sender, DataReceivedEventArgs data)
+
+        public bool WaitForOutput(double millisecondsTimeout)
         {
+            return WaitForOutput(TimeSpan.FromMilliseconds(millisecondsTimeout));
+        }
+
+        public void WaitForOutput()
+        {
+            WaitForOutput(-1);
         }
     }
 }
