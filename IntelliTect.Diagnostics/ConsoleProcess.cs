@@ -35,16 +35,16 @@ namespace IntelliTect.Diagnostics
                     StringComparison.OrdinalIgnoreCase));
         }
 
-        public static ConsoleProcess StartConsoleProcess(string fileName, string expectedOutput,
-            string arguments = null,
-            ConsoleApplicationStartOptions options = default,
-            string workingDirectory = null)
+        public static ConsoleProcess StartConsoleProcess(string fileName, string arguments = null,
+            string expectedOutput = null, string workingDirectory = null,
+            ConsoleApplicationStartOptions options = default)
         {
             if (options.HasFlag(ConsoleApplicationStartOptions.DoNotStartIfAlreadyRunning))
-                if (!GetProcesses().Any(
-                    item => string.Equals(item.ProcessName, fileName, StringComparison.OrdinalIgnoreCase)))
+                if (IsProcessAlreadyRunning(fileName))
+                {
                     throw new ArgumentException(
                         $"The process '{fileName}' with arguments '{arguments}' is already running.");
+                }
 
             // The process isn't already running.
             var process = new ConsoleProcess
@@ -52,7 +52,9 @@ namespace IntelliTect.Diagnostics
                 StartInfo = new ProcessStartInfo(fileName, arguments) {UseShellExecute = false}
             };
             if (string.IsNullOrWhiteSpace(workingDirectory) == false)
+            {
                 process.StartInfo.WorkingDirectory = workingDirectory;
+            }
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
             process.OutputDataReceived += OnDataReceived;
