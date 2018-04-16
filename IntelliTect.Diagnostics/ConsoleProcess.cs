@@ -61,6 +61,9 @@ namespace IntelliTect.Diagnostics
             process.ErrorDataReceived += OnDataReceived;
 
             process.Start();
+            // TODO: This results in output getting missed.  Therefore, users could miss output.
+            // Switch to use streams not async events.
+            System.Threading.Tasks.Task.Delay(1000);
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 

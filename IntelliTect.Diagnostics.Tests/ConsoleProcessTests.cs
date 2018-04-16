@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Xunit;
 using static IntelliTect.Diagnostics.ConsoleProcess;
@@ -45,6 +47,16 @@ namespace IntelliTect.Diagnostics.Tests
         }
 
         [Fact]
+        public void StartConsoleProcess_ReadStandardOut_Fails()
+        {
+            // TODO: You cannot configure process to monitor events and to still read StandadOutput.  We 
+            // Need to switch to use Standard Output.
+            ConsoleProcess process = ConsoleProcess.StartConsoleProcess("cmd.exe", "/?");
+            string data = process.StandardOutput.ReadToEnd();
+            Assert.Contains("The special characters that require quotes are", data);
+        }
+
+        [Fact]
         public void StartConsoleProcess_SpecifyDifferentDirectory_Success()
         {
             string expected = new DirectoryInfo(@"..\").FullName.TrimEnd(Path.DirectorySeparatorChar);
@@ -61,13 +73,24 @@ namespace IntelliTect.Diagnostics.Tests
         [Fact]
         public void StartConsoleProcess_CaptureOutput_Success()
         {
-            throw new NotImplementedException();
-            /// NOTES:
-            /// 1. If the caller reads StdOutput or StdError an exception will be thrown but these streams are available on ConsoleProcess
-            /// 2. We could expect the caller to subscribe to OutputDataReceived and ErrorDataReceived
-            /// 3. We could save the output (into a stream or a string?) and provide that to the caller instead
-            /// 4. Should we wrap process or derive from it to avoid 1. (and likely others)
+                /// NOTES:
+                /// 1. If the caller reads StdOutput or StdError an exception will be thrown but these streams are available on ConsoleProcess
+                /// 2. We could expect the caller to subscribe to OutputDataReceived and ErrorDataReceived
+                /// 3. We could save the output (into a stream or a string?) and provide that to the caller instead
+                /// 4. Should we wrap process or derive from it to avoid 1. (and likely others)
         }
+
+        [Fact]
+        public void StartConsoleProess_TryCaptureImmediteOutput_Success()
+        {
+            using (ConsoleProcess process = ConsoleProcess.StartConsoleProcess(
+                "cmd.exe", "/?", "Starts a new instance of the Windows command interpreter"))
+            {
+                Assert.False(process.WaitForOutput(5000),
+                    "The output should have appeared but it didn't because there is an instant (currently simulated with Task.Delay()) between the process starting and the call to BeginOutputReadLine");
+            }
+        }
+
 
         [Fact]
         public void StartConsoleProcess_WaitsUntilCancellation()
