@@ -5,7 +5,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
     <Authors>Mike Curn</Authors>
     <Company>IntelliTect</Company>
     <Description>Set of methods to facilitate waiting a certain amount of time for a delegate to evaluate, while ignoring certain exceptions while attempting to evaluate, and throwing after a specified time limit (or throwing immediately if an unexpected exception is encountered)</Description>
@@ -16,8 +15,6 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>ui test, automated test, testing, api test, web test, integration test, await, async</PackageTags>
     <PackageReleaseNotes>Initial release for long-term home, independant from Selenium dependency</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
     <AssemblyName>IntelliTect.IntelliWait</AssemblyName>
   </PropertyGroup>
 
