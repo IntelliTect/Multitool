@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Mike Curn</Authors>
+    <Company>IntelliTect</Company>
+    <Description>Set of methods to facilitate waiting a certain amount of time for a delegate to evaluate, while ignoring certain exceptions while attempting to evaluate, and throwing after a specified time limit (or throwing immediately if an unexpected exception is encountered)</Description>
+    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>2018</Copyright>
+    <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>ui test, automated test, testing, api test, web test, integration test, await, async</PackageTags>
+    <PackageReleaseNotes>Initial release for long-term home, independant from Selenium dependency</PackageReleaseNotes>
+    <AssemblyName>IntelliTect.IntelliWait</AssemblyName>
+  </PropertyGroup>
+
+</Project>
