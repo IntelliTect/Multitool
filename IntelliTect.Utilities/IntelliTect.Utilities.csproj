@@ -1,22 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>IntelliTect.Utilities</RootNamespace>
-    <TargetFramework>net462</TargetFramework>
-    <Description>A utility library for IntelliTect</Description>
-    <Company>IntelliTect</Company>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>IntelliTect-Nuget</Company>
     <Authors>IntelliTect</Authors>
-    <Copyright>Copyright © IntelliTect 2017</Copyright>
+    <Description>A utility library for IntelliTect</Description>
+    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © IntelliTect 2018</Copyright>
+    <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>IntelliTect Utilities</PackageTags>
+    <PackageReleaseNotes>Upgraded to netstandard 2.0</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <CodeAnalysisRuleSet>..\SolutionRuleset.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="IntelliTect.Utilities.nuspec" />
-  </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
