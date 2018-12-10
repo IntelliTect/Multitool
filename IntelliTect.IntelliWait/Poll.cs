@@ -230,7 +230,7 @@ namespace IntelliTect.IntelliWait
                 {
                     exceptions.Add(ex);
                 }
-                await Task.Delay(250);
+                await Task.Delay(250).ConfigureAwait(false);
             } while (sw.Elapsed < timeToWait);
             throw new AggregateException(exceptions);
         }
