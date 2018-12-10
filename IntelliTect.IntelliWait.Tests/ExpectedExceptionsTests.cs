@@ -106,7 +106,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionsGenericForFourDerivedTypesChecking()
         {
             AggregateException ae = await Assert.ThrowsAsync<AggregateException>(() => 
-                Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException>(() => CheckExceptionsVoidReturn(2, 4), TimeSpan.FromSeconds(1)));
+                Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException>(() => CheckExceptionsVoidReturn(3, 4), TimeSpan.FromSeconds(2)));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(InvalidOperationException));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(InvalidProgramException));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(IndexOutOfRangeException));
@@ -117,7 +117,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncGenericForFourDerivedTypesChecking()
         {
             AggregateException ae = await Assert.ThrowsAsync<AggregateException>(() => 
-                Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException>(() => CheckExceptionsBoolReturn(2, 4), TimeSpan.FromSeconds(1)));
+                Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException>(() => CheckExceptionsBoolReturn(3, 4), TimeSpan.FromSeconds(2)));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(InvalidOperationException));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(InvalidProgramException));
             Assert.Contains(ae.InnerExceptions, e => e.GetType() == typeof(IndexOutOfRangeException));
