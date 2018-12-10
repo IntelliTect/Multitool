@@ -65,5 +65,17 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Wait.Until<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException>(() => CheckExceptionsBoolReturn(1, 4), TimeSpan.FromSeconds(2));
         }
+
+        [Fact]
+        public async Task CheckActionsGenericForFiveExpectedExceptiosnDoesNotThrow()
+        {
+            await Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException, FieldAccessException>(() => CheckExceptionsVoidReturn(1, 5), TimeSpan.FromSeconds(2));
+        }
+
+        [Fact]
+        public async Task CheckFuncGenericForFiveExpectedExceptionsDoesNotThrow()
+        {
+            await Poll.UntilNoExceptions<InvalidOperationException, InvalidProgramException, IndexOutOfRangeException, ArgumentNullException, FieldAccessException>(() => CheckExceptionsBoolReturn(1, 5), TimeSpan.FromSeconds(2));
+        }
     }
 }

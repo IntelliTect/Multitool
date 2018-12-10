@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.IntelliWait
 {
-    [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-    public static class Wait
+    public static class Poll
     {
         /// <summary>
         /// Repeatedly checks for a condition with void return type until it is satisifed or a timeout is reached
@@ -17,10 +16,10 @@ namespace IntelliTect.IntelliWait
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <param name="exceptionsToIgnore">A list of exceptions to ignore when attempting to evaluate the function</param>
         /// <returns>An async task that can return a value of type TResult</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task<TResult> Until<TResult>(Func<TResult> func, TimeSpan timeToWait, params Type[] exceptionsToIgnore)
+        public static Task<TResult> UntilNoExceptions<TResult>(Func<TResult> func, TimeSpan timeToWait, params Type[] exceptionsToIgnore)
         {
-            return Poll.UntilNoExceptions<TResult>(func, timeToWait, exceptionsToIgnore);
+            VerifyAllExceptionTypes(exceptionsToIgnore);
+            return ExecutePollingFunction(func, timeToWait, exceptionsToIgnore);
         }
 
         /// <summary>
@@ -30,10 +29,10 @@ namespace IntelliTect.IntelliWait
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <param name="exceptionsToIgnore">A list of exceptions to ignore when attempting to evaluate the function</param>
         /// <returns>An async task for the operation</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task Until(Action action, TimeSpan timeToWait, params Type[] exceptionsToIgnore)
+        public static Task UntilNoExceptions(Action action, TimeSpan timeToWait, params Type[] exceptionsToIgnore)
         {
-            return Poll.UntilNoExceptions(action, timeToWait, exceptionsToIgnore);
+            VerifyAllExceptionTypes(exceptionsToIgnore);
+            return ExecutePollingFunction(action, timeToWait, exceptionsToIgnore);
         }
 
         /// <summary>
@@ -44,11 +43,10 @@ namespace IntelliTect.IntelliWait
         /// <param name="func">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task that can return a value of type TResult</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task<TResult> Until<TException, TResult>(Func<TResult> func, TimeSpan timeToWait)
+        public static Task<TResult> UntilNoExceptions<TException, TResult>(Func<TResult> func, TimeSpan timeToWait)
             where TException : Exception
         {
-            return Poll.UntilNoExceptions<TException, TResult>(func, timeToWait);
+            return ExecutePollingFunction(func, timeToWait, typeof(TException));
         }
 
         /// <summary>
@@ -58,11 +56,10 @@ namespace IntelliTect.IntelliWait
         /// <param name="action">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task for the operation</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task Until<TException>(Action action, TimeSpan timeToWait)
+        public static Task UntilNoExceptions<TException>(Action action, TimeSpan timeToWait)
             where TException : Exception
         {
-            return Poll.UntilNoExceptions<TException>(action, timeToWait);
+            return ExecutePollingFunction(action, timeToWait, typeof(TException));
         }
 
         /// <summary>
@@ -74,12 +71,11 @@ namespace IntelliTect.IntelliWait
         /// <param name="func">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task that can return a value of type TResult</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task<TResult> Until<TException1, TException2, TResult>(Func<TResult> func, TimeSpan timeToWait)
+        public static Task<TResult> UntilNoExceptions<TException1, TException2, TResult>(Func<TResult> func, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2, TResult>(func, timeToWait);
+            return ExecutePollingFunction(func, timeToWait, typeof(TException1), typeof(TException2));
         }
 
         /// <summary>
@@ -90,12 +86,11 @@ namespace IntelliTect.IntelliWait
         /// <param name="action">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task for the operation</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task Until<TException1, TException2>(Action action, TimeSpan timeToWait)
+        public static Task UntilNoExceptions<TException1, TException2>(Action action, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2>(action, timeToWait);
+            return ExecutePollingFunction(action, timeToWait, typeof(TException1), typeof(TException2));
         }
 
         /// <summary>
@@ -108,13 +103,12 @@ namespace IntelliTect.IntelliWait
         /// <param name="func">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task that can return a value of type TResult</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task<TResult> Until<TException1, TException2, TException3, TResult>(Func<TResult> func, TimeSpan timeToWait)
+        public static Task<TResult> UntilNoExceptions<TException1, TException2, TException3, TResult>(Func<TResult> func, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
             where TException3 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2, TException3, TResult>(func, timeToWait);
+            return ExecutePollingFunction(func, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3));
         }
 
         /// <summary>
@@ -126,13 +120,12 @@ namespace IntelliTect.IntelliWait
         /// <param name="action">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task for the operation</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task Until<TException1, TException2, TException3>(Action action, TimeSpan timeToWait)
+        public static Task UntilNoExceptions<TException1, TException2, TException3>(Action action, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
             where TException3 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2, TException3>(action, timeToWait);
+            return ExecutePollingFunction(action, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3));
         }
 
         /// <summary>
@@ -146,14 +139,13 @@ namespace IntelliTect.IntelliWait
         /// <param name="func">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task that can return a value of type TResult</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task<TResult> Until<TException1, TException2, TException3, TException4, TResult>(Func<TResult> func, TimeSpan timeToWait)
+        public static Task<TResult> UntilNoExceptions<TException1, TException2, TException3, TException4, TResult>(Func<TResult> func, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
             where TException3 : Exception
             where TException4 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2, TException3, TException4, TResult>(func, timeToWait);
+            return ExecutePollingFunction(func, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3), typeof(TException4));
         }
 
         /// <summary>
@@ -166,14 +158,89 @@ namespace IntelliTect.IntelliWait
         /// <param name="action">Function to check for valid evaluation</param>
         /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
         /// <returns>An async task for the operation</returns>
-        [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
-        public static Task Until<TException1, TException2, TException3, TException4>(Action action, TimeSpan timeToWait)
+        public static Task UntilNoExceptions<TException1, TException2, TException3, TException4>(Action action, TimeSpan timeToWait)
             where TException1 : Exception
             where TException2 : Exception
             where TException3 : Exception
             where TException4 : Exception
         {
-            return Poll.UntilNoExceptions<TException1, TException2, TException3, TException4>(action, timeToWait);
+            return ExecutePollingFunction(action, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3), typeof(TException4));
+        }
+
+        /// <summary>
+        /// Repeatedly checks for a condition with void return type until it is satisifed or a timeout is reached
+        /// </summary>
+        /// <typeparam name="TException1">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException2">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException3">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException4">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException5">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TResult">Return type of the function to evaluate</typeparam>
+        /// <param name="func">Function to check for valid evaluation</param>
+        /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
+        /// <returns>An async task that can return a value of type TResult</returns>
+        public static Task<TResult> UntilNoExceptions<TException1, TException2, TException3, TException4, TException5, TResult>(Func<TResult> func, TimeSpan timeToWait)
+            where TException1 : Exception
+            where TException2 : Exception
+            where TException3 : Exception
+            where TException4 : Exception
+            where TException5 : Exception
+        {
+            return ExecutePollingFunction(func, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3), typeof(TException4), typeof(TException5));
+        }
+
+        /// <summary>
+        /// Repeatedly checks for a condition with void return type until it is satisifed or a timeout is reached
+        /// </summary>
+        /// <typeparam name="TException1">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException2">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException3">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException4">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <typeparam name="TException5">An exception type to ignore when attempting to evaluate the function</typeparam>
+        /// <param name="action">Function to check for valid evaluation</param>
+        /// <param name="timeToWait">Time to try evaluating the given function until an exception is thrown</param>
+        /// <returns>An async task for the operation</returns>
+        public static Task UntilNoExceptions<TException1, TException2, TException3, TException4, TException5>(Action action, TimeSpan timeToWait)
+            where TException1 : Exception
+            where TException2 : Exception
+            where TException3 : Exception
+            where TException4 : Exception
+            where TException5 : Exception
+        {
+            return ExecutePollingFunction(action, timeToWait, typeof(TException1), typeof(TException2), typeof(TException3), typeof(TException4), typeof(TException5));
+        }
+
+        private static Task ExecutePollingFunction(Action actionToWaitForComplete, TimeSpan timeToWait, params Type[] types)
+        {
+            return ExecutePollingFunction(() => { actionToWaitForComplete(); return true; }, timeToWait, types);
+        }
+
+        private static async Task<TResult> ExecutePollingFunction<TResult>(Func<TResult> actionToWaitForComplete, TimeSpan timeToWait, params Type[] types)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            List<Exception> exceptions = new List<Exception>();
+            do
+            {
+                try
+                {
+                    return actionToWaitForComplete();
+                }
+                catch (Exception ex) when (types.Contains(ex.GetType()))
+                {
+                    exceptions.Add(ex);
+                }
+                await Task.Delay(250);
+            } while (sw.Elapsed < timeToWait);
+            throw new AggregateException(exceptions);
+        }
+
+        private static void VerifyAllExceptionTypes(params Type[] exes)
+        {
+            if (!exes.All(e => e.IsSubclassOf(typeof(Exception)) || e == typeof(Exception)))
+            {
+                throw new ArgumentException("Invalid type passed into exceptionsToIgnore parameter. Must be of type Exception.");
+            }
         }
     }
 }

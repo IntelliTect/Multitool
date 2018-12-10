@@ -62,6 +62,8 @@ namespace IntelliTect.IntelliWait.Tests
                         throw new IndexOutOfRangeException();
                     case 4:
                         throw new ArgumentNullException();
+                    case 5:
+                        throw new FieldAccessException();
                     default:
                         throw new ArgumentException();
                 }
