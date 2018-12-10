@@ -14,7 +14,8 @@
     <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>ui test, automated test, testing, api test, web test, integration test, await, async</PackageTags>
-    <PackageReleaseNotes>Initial release for long-term home, independant from Selenium dependency</PackageReleaseNotes>
+    <PackageReleaseNotes>Function rename to get away from Selenium terminology, and to use a more generic (but accurate) name for what functions (new terminology: Poll.UntilNoExceptions)
+Obsoleting old Wait.Until terminology</PackageReleaseNotes>
     <AssemblyName>IntelliTect.IntelliWait</AssemblyName>
   </PropertyGroup>
 
