@@ -10,7 +10,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionParamsWithNoExceptionArgumentThrowsException()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until(
+                () => Poll.UntilNoExceptions(
                     () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
@@ -18,7 +18,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncParamsForNoExceptionArgumentThrowsException()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until(
+                () => Poll.UntilNoExceptions(
                     () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
@@ -26,7 +26,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionParamsForUnExpectedExpectionThrows()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until(
+                () => Poll.UntilNoExceptions(
                     () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
         }
 
@@ -34,7 +34,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncParamsForUnExpectedExpectionThrows()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until(
+                () => Poll.UntilNoExceptions(
                     () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
         }
 
@@ -42,7 +42,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionGenericForOneUnExpectedExpectionThrows()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until<NullReferenceException>(
+                () => Poll.UntilNoExceptions<NullReferenceException>(
                     () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
@@ -50,7 +50,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncGenericForOneUnExpectedExpectionThrows()
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => Wait.Until<NullReferenceException>(
+                () => Poll.UntilNoExceptions<NullReferenceException>(
                     () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
@@ -58,7 +58,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionGenericForTwoUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<InvalidProgramException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException>(
                     () => CheckExceptionsVoidReturn(1, 2), TimeSpan.FromSeconds(2)));
         }
 
@@ -66,7 +66,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncGenericForTwoUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<InvalidProgramException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException>(
                     () => CheckExceptionsBoolReturn(1, 2), TimeSpan.FromSeconds(2)));
         }
 
@@ -74,7 +74,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionGenericForThreeUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<IndexOutOfRangeException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException, InvalidProgramException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, InvalidProgramException>(
                     () => CheckExceptionsVoidReturn(1, 3), TimeSpan.FromSeconds(2)));
         }
 
@@ -82,7 +82,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncGenericForThreeUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<IndexOutOfRangeException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException, InvalidProgramException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, InvalidProgramException>(
                     () => CheckExceptionsBoolReturn(1, 3), TimeSpan.FromSeconds(2)));
         }
 
@@ -90,7 +90,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionGenericForFourUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
                     () => CheckExceptionsVoidReturn(1, 4), TimeSpan.FromSeconds(2)));
         }
 
@@ -98,7 +98,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncGenericForFourUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
-                () => Wait.Until<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
+                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
                     () => CheckExceptionsBoolReturn(1, 4), TimeSpan.FromSeconds(2)));
         }
 
