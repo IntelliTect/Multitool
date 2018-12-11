@@ -11,7 +11,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions(
-                    () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions(
-                    () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions(
-                    () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
+                    () => Test.CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions(
-                    () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
+                    () => Test.CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2), typeof(NullReferenceException)));
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions<NullReferenceException>(
-                    () => CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidOperationException>(
                 () => Poll.UntilNoExceptions<NullReferenceException>(
-                    () => CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 1), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidProgramException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException>(
-                    () => CheckExceptionsVoidReturn(1, 2), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 2), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<InvalidProgramException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException>(
-                    () => CheckExceptionsBoolReturn(1, 2), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 2), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<IndexOutOfRangeException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, InvalidProgramException>(
-                    () => CheckExceptionsVoidReturn(1, 3), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 3), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<IndexOutOfRangeException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, InvalidProgramException>(
-                    () => CheckExceptionsBoolReturn(1, 3), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 3), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
-                    () => CheckExceptionsVoidReturn(1, 4), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 4), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException>(
-                    () => CheckExceptionsBoolReturn(1, 4), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 4), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException, FieldAccessException>(
-                    () => CheckExceptionsVoidReturn(1, 5), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsVoidReturn(1, 5), TimeSpan.FromSeconds(2)));
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace IntelliTect.IntelliWait.Tests
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
                 () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, IndexOutOfRangeException, InvalidProgramException, FieldAccessException>(
-                    () => CheckExceptionsBoolReturn(1, 5), TimeSpan.FromSeconds(2)));
+                    () => Test.CheckExceptionsBoolReturn(1, 5), TimeSpan.FromSeconds(2)));
         }
     }
 }

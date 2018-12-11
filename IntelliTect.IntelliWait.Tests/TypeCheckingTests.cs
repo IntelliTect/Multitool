@@ -10,7 +10,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionParamsForInvalidTypeChecking()
         {
             Exception ex = await Assert.ThrowsAsync<ArgumentException>(
-                () => Poll.UntilNoExceptions(ThrowExceptionWithNoReturn, TimeSpan.FromSeconds(1), typeof(string)));
+                () => Poll.UntilNoExceptions(Test.ThrowExceptionWithNoReturn, TimeSpan.FromSeconds(1), typeof(string)));
             Assert.Equal(ExceptionMessage, ex.Message);
         }
 
@@ -18,7 +18,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncParamsForInvalidTypeChecking()
         {
             Exception ex = await Assert.ThrowsAsync<ArgumentException>(
-                () => Poll.UntilNoExceptions(ThrowExceptionWithReturn, TimeSpan.FromSeconds(1), typeof(string)));
+                () => Poll.UntilNoExceptions(Test.ThrowExceptionWithReturn, TimeSpan.FromSeconds(1), typeof(string)));
             Assert.Equal(ExceptionMessage, ex.Message);
         }
 
@@ -26,7 +26,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckActionParamsForMixedInvalidTypeChecking()
         {
             Exception ex = await Assert.ThrowsAsync<ArgumentException>(
-                () => Poll.UntilNoExceptions(ThrowNullRefExceptionWithNoReturn, TimeSpan.FromSeconds(1), typeof(Exception), typeof(string)));
+                () => Poll.UntilNoExceptions(Test.ThrowNullRefExceptionWithNoReturn, TimeSpan.FromSeconds(1), typeof(Exception), typeof(string)));
             Assert.Equal(ExceptionMessage, ex.Message);
         }
 
@@ -34,7 +34,7 @@ namespace IntelliTect.IntelliWait.Tests
         public async Task CheckFuncParamsForMixedInvalidTypeChecking()
         {
             Exception ex = await Assert.ThrowsAsync<ArgumentException>(
-                () => Poll.UntilNoExceptions(ThrowNullRefExceptionWithReturn, TimeSpan.FromSeconds(1), typeof(string), typeof(NullReferenceException)));
+                () => Poll.UntilNoExceptions(Test.ThrowNullRefExceptionWithReturn, TimeSpan.FromSeconds(1), typeof(string), typeof(NullReferenceException)));
             Assert.Equal(ExceptionMessage, ex.Message);
         }
 
