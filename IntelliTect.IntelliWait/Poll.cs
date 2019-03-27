@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.IntelliWait
 {
+    [Obsolete("Deprecating in favor of Polly, which is a more robust and flexible polling library: https://github.com/App-vNext/Polly")]
     public static class Poll
     {
         /// <summary>

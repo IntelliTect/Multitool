@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.IntelliWait
 {
-    [Obsolete("Deprecating Wait.Until() naming convention in favor of more accurate and descriptive Poll.UntilNoExceptions naming")]
+    [Obsolete("Deprecating in favor of Polly, which is a more robust and flexible polling library: https://github.com/App-vNext/Polly")]
     public static class Wait
     {
         /// <summary>
