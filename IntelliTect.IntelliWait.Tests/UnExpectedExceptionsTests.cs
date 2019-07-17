@@ -79,14 +79,6 @@ namespace IntelliTect.IntelliWait.Tests
         }
 
         [Fact]
-        public async Task CheckFuncGenericForThreeUnExpectedExpectionsThrows()
-        {
-            await Assert.ThrowsAsync<IndexOutOfRangeException>(
-                () => Poll.UntilNoExceptions<NullReferenceException, InvalidOperationException, InvalidProgramException>(
-                    () => Test.CheckExceptionsBoolReturn(1, 3), TimeSpan.FromSeconds(2)));
-        }
-
-        [Fact]
         public async Task CheckActionGenericForFourUnExpectedExpectionsThrows()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(
