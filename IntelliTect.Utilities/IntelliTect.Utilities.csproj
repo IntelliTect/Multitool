@@ -7,19 +7,21 @@
     <Authors>IntelliTect</Authors>
     <Description>A utility library for IntelliTect</Description>
     <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright © IntelliTect 2018</Copyright>
+    <Copyright>Copyright © IntelliTect 2019</Copyright>
     <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>IntelliTect Utilities</PackageTags>
-    <PackageReleaseNotes>Upgraded to netstandard 2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Update deps and fix CA warnings-as-errors.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
