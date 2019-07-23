@@ -1,0 +1,49 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+  IntelliTect.Utilities.Version: 1.0.15
+  IntelliTect.IntelliWait.Version: 1.2.1
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+    feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.sln'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.Tests.csproj'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Get-ChildItem "IntelliTect.*" -Directory -Recurse -Exclude "*.Tests" | ForEach-Object {
+        Push-Location $_
+        Write-Output "Directory changed to - $pwd"
+        $currentDirectoryFileName = Split-Path -Path $pwd -Leaf -Resolve
+        $qualifiedVersion = "$currentDirectoryFileName.Version".ToUpper().Replace(".", "_")
+        $parsedVersion = (get-item env:$qualifiedVersion).Value
+        Write-Output "Found version $qualifiedVersion - $parsedVersion"
+        dotnet pack -p:Version=$parsedVersion-ci$(Build.BuildId) -o $(Build.ArtifactStagingDirectory)
+      }
+      Pop-Location
+    pwsh: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'NuGets'
+    publishLocation: 'Container'
