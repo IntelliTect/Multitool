@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using IntelliTect.IntelliWait.Properties;
 
 namespace IntelliTect.IntelliWait
 {
@@ -240,7 +241,7 @@ namespace IntelliTect.IntelliWait
         {
             if (!exes.All(e => e.IsSubclassOf(typeof(Exception)) || e == typeof(Exception)))
             {
-                throw new ArgumentException("Invalid type passed into exceptionsToIgnore parameter. Must be of type Exception.");
+                throw new ArgumentException(Resources.VerifyAllExceptionTypes_ArgumentException);
             }
         }
     }
