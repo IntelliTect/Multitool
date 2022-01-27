@@ -23,7 +23,7 @@ By contributing to IntelliTect, you assert that:
 * The contribution is your own original work.
 * You have the right to assign the copyright for the work (it is not owned by your employer, or
   you have been given copyright assignment in writing).
-* You [license](https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE) the contribution under the terms applied to the rest of the IntelliTect project.
+* You [license](https://github.com/IntelliTect/IntelliTect/blob/main/LICENSE) the contribution under the terms applied to the rest of the IntelliTect project.
 
 ## Code
 ### Code style
@@ -64,7 +64,7 @@ Any new code should also have reasonable unit test coverage.
  * Test your changes and please help us out by updating and implementing some automated tests.
    It is recommended that all contributors spend some time looking over the tests in the source code.
    You can't go wrong emulating one of the existing tests and then changing it specific to the behavior you are testing.
- * Please do not update your branch from Master unless we ask you to. See the responding to feedback section below.
+ * Please do not update your branch from main unless we ask you to. See the responding to feedback section below.
 
  ### Prepare commits
 This section serves to help you understand what makes a good commit.
@@ -116,10 +116,10 @@ Sometimes we may need you to rebase your commit against the latest code before w
 If this happens, you can do the following:
 
  * `git fetch upstream` (upstream would be the mainstream repo or `IntelliTect` in this case)
- * `git checkout master`
- * `git rebase upstream/master`
+ * `git checkout main`
+ * `git rebase upstream/main`
  * `git checkout your-branch`
- * `git rebase master`
+ * `git rebase main`
  * Fix any merge conflicts
  * `git push origin your-branch` (origin would be your GitHub repo or `your-github-username/IntelliTect` in this case).
    You may need to `git push origin your-branch --force` to get the commits pushed.
@@ -132,7 +132,7 @@ The only reasons a pull request should be closed and resubmitted are as follows:
    Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
 ## NuGet
-Currently AppVeyor is building and releasing NuGets on every merge to the release branch. All PRs should be merged into master and then a PR from master into release when new NuGets are needed. Avoid PRs from feature branches directly to the release branch.
+Currently AppVeyor is building and releasing NuGets on every merge to the release branch. All PRs should be merged into main and then a PR from main into release when new NuGets are needed. Avoid PRs from feature branches directly to the release branch.
 
 ## Other general information
 If you reformat code or hit core functionality without an approval from a person on the IntelliTect Team,
