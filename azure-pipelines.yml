@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- main
 
 variables:
   IntelliTect.Utilities.Version: 1.0.15

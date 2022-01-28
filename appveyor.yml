@@ -4,7 +4,7 @@ pull_requests:
 branches:
   only:
   - release
-  - master
+  - main
 skip_branch_with_pr: true
 image: Visual Studio 2017
 assembly_info:

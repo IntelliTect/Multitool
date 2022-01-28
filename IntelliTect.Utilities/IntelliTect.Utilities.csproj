@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -6,7 +6,7 @@
     <Company>IntelliTect-Nuget</Company>
     <Authors>IntelliTect</Authors>
     <Description>A utility library for IntelliTect</Description>
-    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/main/LICENSE</PackageLicenseUrl>
     <Copyright>Copyright © IntelliTect 2019</Copyright>
     <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>

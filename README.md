@@ -29,4 +29,4 @@ Libraries
 Contributing
 ============
 
-See the CONTRIBUTING.md file [here](https://raw.githubusercontent.com/IntelliTect/IntelliTect/master/CONTRIBUTING.md).
+See the CONTRIBUTING.md file [here](https://raw.githubusercontent.com/IntelliTect/IntelliTect/main/CONTRIBUTING.md).
