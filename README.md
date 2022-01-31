@@ -4,12 +4,11 @@
 
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/IntelliTect/home)
 
-
 Libraries of useful C# things, focused on shipping Nuget packages.
 
 Libraries
 =========
-### IntelliTect.Utilities: [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
+### [IntelliTect.Utilities](https://www.nuget.org/packages/IntelliTect.Utilities/): [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Utilities.svg)](https://www.nuget.org/packages/IntelliTect.Utilities/)
 
 ### Namespaces within this library:
 * IntelliTect.Utilities 
@@ -17,7 +16,7 @@ Libraries
 * IntelliTect.Utilities.Security
     - ClaimsPrincipalExtensions: Extention methods to get a user ID and roles.
 
-### IntelliTect.IntelliWait: [![NuGet](https://img.shields.io/nuget/v/IntelliTect.IntelliWait.svg)](https://www.nuget.org/packages/IntelliTect.IntelliWait/)
+### [IntelliTect.IntelliWait](https://www.nuget.org/packages/IntelliTect.IntelliWait/): [![NuGet](https://img.shields.io/nuget/v/IntelliTect.IntelliWait.svg)](https://www.nuget.org/packages/IntelliTect.IntelliWait/)
 
 ### Namespaces within this library:
 
