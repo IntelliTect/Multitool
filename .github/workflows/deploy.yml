@@ -64,11 +64,12 @@ jobs:
       - name: Push NuGet
         run: |
           $tagVersion = "${{ github.ref }}".substring(11)
-          echo "tagVersion=$tagVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo '::set-output name=TAG_VERSION::$tagVersion'
           dotnet nuget push IntelliTect.Utilities.$tagVersion.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        id: tag-version
       - name: Upload nupkg to Releases
         uses: softprops/action-gh-release@v1
         with:
           fail_on_unmatched_files: true
           generate_release_notes: true
-          files: IntelliTect.Utilities.${{ env.tagVersion }}.nupkg
+          files: IntelliTect.Utilities.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg
