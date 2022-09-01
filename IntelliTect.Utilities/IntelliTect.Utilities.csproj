@@ -1,18 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<OutputType>Library</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<IncludeSymbols>true</IncludeSymbols>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Company>IntelliTect-Nuget</Company>
     <Authors>IntelliTect</Authors>
     <Description>A utility library for IntelliTect</Description>
-    <PackageLicenseUrl>https://github.com/IntelliTect/IntelliTect/blob/main/LICENSE</PackageLicenseUrl>
     <Copyright>Copyright © IntelliTect 2019</Copyright>
     <PackageProjectUrl>https://github.com/IntelliTect/IntelliTect</PackageProjectUrl>
     <RepositoryUrl>https://github.com/IntelliTect/IntelliTect</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>IntelliTect Utilities</PackageTags>
-    <PackageReleaseNotes>Update deps and fix CA warnings-as-errors.</PackageReleaseNotes>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<RepositoryType>git</RepositoryType>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<Deterministic>true</Deterministic>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en</NeutralLanguage>
     <Version>1.0.1</Version>
@@ -21,9 +26,9 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 </Project>

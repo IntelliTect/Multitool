@@ -1,19 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.Utilities", "IntelliTect.Utilities\IntelliTect.Utilities.csproj", "{4AEDF7B5-8FD1-4361-B230-173646A0D20C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.Utilities.Tests", "IntelliTect.Utilities.Tests\IntelliTect.Utilities.Tests.csproj", "{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.IntelliWait", "IntelliTect.IntelliWait\IntelliTect.IntelliWait.csproj", "{C38B5217-6221-4D72-B264-CD7FF3D201BC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntelliTect.IntelliWait.Tests", "IntelliTect.IntelliWait.Tests\IntelliTect.IntelliWait.Tests.csproj", "{174B4C67-DEFA-4387-A947-52395E4C79A5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FB66610-EB11-460E-8CC8-F49044F452D0}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
+		.github\workflows\deploy.yml = .github\workflows\deploy.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -31,14 +29,6 @@ Global
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0281AA3-FAED-4A2C-8C5A-C2F3DC39511A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C38B5217-6221-4D72-B264-CD7FF3D201BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C38B5217-6221-4D72-B264-CD7FF3D201BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C38B5217-6221-4D72-B264-CD7FF3D201BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C38B5217-6221-4D72-B264-CD7FF3D201BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{174B4C67-DEFA-4387-A947-52395E4C79A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{174B4C67-DEFA-4387-A947-52395E4C79A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{174B4C67-DEFA-4387-A947-52395E4C79A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{174B4C67-DEFA-4387-A947-52395E4C79A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

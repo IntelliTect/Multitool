@@ -5,6 +5,9 @@ using System.Security.Claims;
 
 namespace IntelliTect.Utilities.Security
 {
+    /// <summary>
+    /// Gets information from a <see cref="ClaimsPrincipal"/>
+    /// </summary>
     public static class ClaimsPrincipalExtensions
     {
         /// <summary>
