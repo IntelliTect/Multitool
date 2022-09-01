@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace IntelliTect.Utilities.Security
+namespace IntelliTect.Multitool.Security
 {
     /// <summary>
     /// Gets information from a <see cref="ClaimsPrincipal"/>

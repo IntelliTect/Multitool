@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace IntelliTect.Utilities
+namespace IntelliTect.Multitool
 {
     /// <summary>
     /// Information about the executing assembly.

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IntelliTect.Utilities\IntelliTect.Utilities.csproj" />
+    <ProjectReference Include="..\IntelliTect.Multitool\IntelliTect.Multitool.csproj" />
   </ItemGroup>
 
 </Project>
