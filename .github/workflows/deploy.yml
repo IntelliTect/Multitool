@@ -64,7 +64,7 @@ jobs:
       - name: Push NuGet
         run: |
           $tagVersion = "${{ github.ref }}".substring(11)
-          echo '::set-output name=TAG_VERSION::$tagVersion'
+          echo "::set-output name=TAG_VERSION::$tagVersion"
           dotnet nuget push IntelliTect.Multitool.$tagVersion.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
         id: tag-version
       - name: Upload nupkg to Releases
