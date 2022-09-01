@@ -10,10 +10,10 @@
     <Authors>IntelliTect</Authors>
     <Description>A utility library for IntelliTect</Description>
     <Copyright>Copyright © IntelliTect 2019</Copyright>
-    <PackageProjectUrl>https://github.com/IntelliTect/Utilities</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/IntelliTect/Utilities</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/IntelliTect/Multitool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/IntelliTect/Multitool</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>IntelliTect Utilities</PackageTags>
+    <PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<RepositoryType>git</RepositoryType>
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
