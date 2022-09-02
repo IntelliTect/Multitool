@@ -1,7 +1,6 @@
-﻿using System;
+﻿using IntelliTect.Multitool.Security;
 using System.Security.Claims;
 using System.Security.Principal;
-using IntelliTect.Multitool.Security;
 using Xunit;
 
 namespace IntelliTect.Multitool.Tests;
@@ -19,7 +18,7 @@ public class ClaimsPrincipalGetUserIdTests
     [Fact]
     public void WhenClaimsPrincipalHasNoProperty_Should_ReturnNull()
     {
-        ClaimsPrincipal sut = new ClaimsPrincipal();
+        ClaimsPrincipal sut = new();
 
         Assert.Null(sut.GetUserId());
     }
@@ -27,7 +26,7 @@ public class ClaimsPrincipalGetUserIdTests
     [Fact]
     public void WhenClaimsPrincipalHasId_Should_ReturnString()
     {
-        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Taki The Frog"), new []{ "Bar" } );
+        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Taki The Frog"), new[] { "Bar" });
 
         Assert.Equal("Taki The Frog", sut.GetUserId());
     }
