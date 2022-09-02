@@ -16,7 +16,7 @@ namespace IntelliTect.Multitool.Security
         /// <param name="principal">The <see cref="ClaimsPrincipal"/> to find a user ID for.</param>
         /// <returns>A <see cref="string"/>, or null if the <see cref="ClaimsPrincipal"/> doesn't contain a <see cref="ClaimTypes.NameIdentifier"/>.</returns>
         /// <exception cref="ArgumentNullException">principal is null.</exception>
-        public static string GetUserId(this ClaimsPrincipal principal)
+        public static string? GetUserId(this ClaimsPrincipal principal)
         {
             if (principal == null) throw new ArgumentNullException(nameof(principal));
 
