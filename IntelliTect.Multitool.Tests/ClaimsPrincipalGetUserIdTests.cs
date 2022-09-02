@@ -11,9 +11,9 @@ public class ClaimsPrincipalGetUserIdTests
     [Fact]
     public void WhenClaimsPrincipalNull_Should_Throw()
     {
-        ClaimsPrincipal sut = null;
+        ClaimsPrincipal? sut = null;
 
-        Assert.Throws<ArgumentNullException>(() => sut.GetUserId());
+        Assert.Throws<ArgumentNullException>(() => sut!.GetUserId());
     }
 
     [Fact]

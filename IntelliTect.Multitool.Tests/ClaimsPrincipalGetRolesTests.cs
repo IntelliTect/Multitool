@@ -11,9 +11,9 @@ namespace IntelliTect.Multitool.Tests
         [Fact]
         public void WhenClaimsPrincipalNull_Should_Throw()
         {
-            ClaimsPrincipal sut = null;
+            ClaimsPrincipal? sut = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut.GetRoles());
+            Assert.Throws<ArgumentNullException>(() => sut!.GetRoles());
         }
 
         [Fact]
