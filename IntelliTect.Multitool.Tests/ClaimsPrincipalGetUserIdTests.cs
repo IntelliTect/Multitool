@@ -21,7 +21,7 @@ public class ClaimsPrincipalGetUserIdTests
     {
         ClaimsPrincipal sut = new ClaimsPrincipal();
 
-        Assert.Throws<InvalidOperationException>(() => sut.GetUserId());
+        Assert.Null(sut.GetUserId());
     }
 
     [Fact]

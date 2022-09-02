@@ -2,7 +2,7 @@
 /// <summary>
 /// Provides normalized paths.
 /// </summary>
-public static class IPaths
+public static class RepositoryPaths
 {
     /// <summary>
     /// Finds the root of the repository by looking for the .git folder.
@@ -14,8 +14,8 @@ public static class IPaths
 
         while (currentDirectory is not null)
         {
-            DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
-            if (subDirectories.Any(r => r.FullName.Equals(Path.Combine(currentDirectory.FullName, ".git"))))
+            DirectoryInfo[] subDirectories = currentDirectory.GetDirectories(".git");
+            if (subDirectories.Length > 0)
             {
                 return currentDirectory.FullName;
             }

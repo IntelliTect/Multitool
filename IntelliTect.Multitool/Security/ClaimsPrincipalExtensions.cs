@@ -24,8 +24,7 @@ public static class ClaimsPrincipalExtensions
         if (claim is null)
         {
             claim = principal.FindFirst(ClaimTypes.Name);
-            string claimValue = claim is null ? throw new InvalidOperationException(nameof(claim)) : claim.Value;
-            return claimValue;
+            return claim?.Value;
         }
 
         return claim.Value;
@@ -43,6 +42,6 @@ public static class ClaimsPrincipalExtensions
         if (principal is null) throw new ArgumentNullException(nameof(principal));
 
         IEnumerable<Claim> claims = principal.FindAll(ClaimTypes.Role);
-        return claims?.Select(claim => claim.Value) ?? Enumerable.Empty<string>();
+        return claims.Select(claim => claim.Value);
     }
 }
