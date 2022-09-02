@@ -29,4 +29,4 @@
 
 -------
 
-See the CONTRIBUTING.md file [here](https://raw.githubusercontent.com/IntelliTect/Multitool/main/CONTRIBUTING.md).
+See the CONTRIBUTING.md file [here](https://github.com/IntelliTect/Multitool/blob/main/CONTRIBUTING.md).

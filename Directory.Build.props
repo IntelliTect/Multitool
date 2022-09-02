@@ -13,6 +13,7 @@
   	<!-- Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
   	<IncludeSymbols>true</IncludeSymbols>
   	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup>
   	<LangVersion>10.0</LangVersion>
@@ -23,6 +24,7 @@
   	<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
   <ItemGroup>
+	<None Include="../README.md" Pack="true" PackagePath="\"/>
   	<SourceRoot Include="$(MSBuildThisFileDirectory)"/>
   	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
   	  <PrivateAssets>all</PrivateAssets>
