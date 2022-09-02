@@ -1,35 +1,33 @@
-﻿using System;
+﻿using IntelliTect.Multitool.Security;
 using System.Security.Claims;
 using System.Security.Principal;
-using IntelliTect.Multitool.Security;
 using Xunit;
 
-namespace IntelliTect.Multitool.Tests
+namespace IntelliTect.Multitool.Tests;
+
+public class ClaimsPrincipalGetRolesTests
 {
-    public class ClaimsPrincipalGetRolesTests
+    [Fact]
+    public void WhenClaimsPrincipalNull_Should_Throw()
     {
-        [Fact]
-        public void WhenClaimsPrincipalNull_Should_Throw()
-        {
-            ClaimsPrincipal? sut = null;
+        ClaimsPrincipal? sut = null;
 
-            Assert.Throws<ArgumentNullException>(() => sut!.GetRoles());
-        }
+        Assert.Throws<ArgumentNullException>(() => sut!.GetRoles());
+    }
 
-        [Fact]
-        public void WhenClaimsPrincipalHasNoRoles_Should_ReturnEmpty()
-        {
-            ClaimsPrincipal sut = new ClaimsPrincipal();
+    [Fact]
+    public void WhenClaimsPrincipalHasNoRoles_Should_ReturnEmpty()
+    {
+        ClaimsPrincipal sut = new();
 
-            Assert.Empty(sut.GetRoles());
-        }
+        Assert.Empty(sut.GetRoles());
+    }
 
-        [Fact]
-        public void WhenClaimsPrincipalHasRoles_Should_ReturnNotEmpty()
-        {
-            ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Uncle Festus"), new[] {"Foo", "Bar"});
+    [Fact]
+    public void WhenClaimsPrincipalHasRoles_Should_ReturnNotEmpty()
+    {
+        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Uncle Festus"), new[] { "Foo", "Bar" });
 
-            Assert.Collection(sut.GetRoles(), s => Assert.Equal("Foo", s), t => Assert.Equal("Bar", t) );
-        }
+        Assert.Collection(sut.GetRoles(), s => Assert.Equal("Foo", s), t => Assert.Equal("Bar", t));
     }
 }
