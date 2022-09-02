@@ -8,21 +8,24 @@ public static class RepositoryPaths
     /// Finds the root of the repository by looking for the .git folder.
     /// </summary>
     /// <returns>Full path to repo root</returns>
-    public static string GetDefaultRepoRoot()
+    public static string DefaultRepoRoot
     {
-        DirectoryInfo? currentDirectory = new(Directory.GetCurrentDirectory());
-
-        while (currentDirectory is not null)
+        get
         {
-            DirectoryInfo[] subDirectories = currentDirectory.GetDirectories(".git");
-            if (subDirectories.Length > 0)
+            DirectoryInfo? currentDirectory = new(Directory.GetCurrentDirectory());
+
+            while (currentDirectory is not null)
             {
-                return currentDirectory.FullName;
+                DirectoryInfo[] subDirectories = currentDirectory.GetDirectories(".git");
+                if (subDirectories.Length > 0)
+                {
+                    return currentDirectory.FullName;
+                }
+
+                currentDirectory = currentDirectory.Parent;
             }
 
-            currentDirectory = currentDirectory.Parent;
+            throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
         }
-
-        throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
 }
