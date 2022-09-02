@@ -2,26 +2,22 @@
 /// <summary>
 /// Provides normalized paths.
 /// </summary>
-public interface IPaths
+public static class IPaths
 {
     /// <summary>
-    /// Returns the repository root directory name.
+    /// Finds the root of the repository by looking for the .git folder.
     /// </summary>
-    /// <param name="CurrentProjectFolderName">The highest level directory name of the current project within the repository.</param>
-    /// <returns></returns>
-    public static string GetDefaultRepoRoot(string CurrentProjectFolderName)
+    /// <returns>Full path to repo root</returns>
+    public static string GetDefaultRepoRoot()
     {
         DirectoryInfo? currentDirectory = new(Directory.GetCurrentDirectory());
 
         while (currentDirectory is not null)
         {
-            if (currentDirectory.FullName.ToLowerInvariant().EndsWith(CurrentProjectFolderName.ToLowerInvariant(), StringComparison.InvariantCulture))
+            DirectoryInfo[] subDirectories = currentDirectory.GetDirectories();
+            if (subDirectories.Any(r => r.FullName.Equals(Path.Combine(currentDirectory.FullName, ".git"))))
             {
-                DirectoryInfo? parent = currentDirectory.Parent;
-                if (parent is not null)
-                {
-                    return parent.FullName;
-                }
+                return currentDirectory.FullName;
             }
 
             currentDirectory = currentDirectory.Parent;
