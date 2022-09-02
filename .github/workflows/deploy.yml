@@ -56,6 +56,7 @@ jobs:
     needs: build-and-test
     environment:
       name: 'Production'
+      url: 'https://www.nuget.org/packages/IntelliTect.Multitool'
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
