@@ -1,13 +1,13 @@
-﻿namespace IntelliTect.Multitool;
+namespace IntelliTect.Multitool;
 /// <summary>
-/// Provides normalized paths.
+/// Provides consistent environment-independent normalized pathing within a repository.
 /// </summary>
 public static class RepositoryPaths
 {
     /// <summary>
     /// Finds the root of the repository by looking for the .git folder.
     /// </summary>
-    /// <returns>Full path to repo root</returns>
+    /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
     {
         DirectoryInfo? currentDirectory = new(Directory.GetCurrentDirectory());
