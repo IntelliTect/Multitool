@@ -10,7 +10,7 @@
   * Example Usage:
 
   ```csharp
-  // This example is in cshtml
+  // This example is in cshtml.
   @(AssemblyInfo.Date.ToString("yyyy-MM-dd HH-mm"))
   ```
 
@@ -18,6 +18,7 @@
   * Example Usage:
 
   ```csharp
+  // In this case, the GetDefaultRepoRoot() method can be used to get the root of a repository.
   string fullPathToTheFile = Path.Combine(RepositoryPaths.GetDefaultRepoRoot(), "TheFile.txt");
   ```
 
