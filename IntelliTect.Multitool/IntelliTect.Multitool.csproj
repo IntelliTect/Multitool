@@ -7,7 +7,6 @@
     <Company>IntelliTect-Nuget</Company>
     <Description>A utility library for IntelliTect</Description>
     <Copyright>Copyright © IntelliTect 2019</Copyright>
-    <RepositoryType>Git</RepositoryType>
     <PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
 	<RepositoryType>git</RepositoryType>
 	<Deterministic>true</Deterministic>
