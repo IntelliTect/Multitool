@@ -1,26 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-	<OutputType>Library</OutputType>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Company>IntelliTect-Nuget</Company>
-    <Description>A utility library for IntelliTect</Description>
-    <Copyright>Copyright © IntelliTect 2019</Copyright>
-    <PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
-	<RepositoryType>git</RepositoryType>
-	<Deterministic>true</Deterministic>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.0.1</Version>
-  </PropertyGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<OutputType>Library</OutputType>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Company>IntelliTect-Nuget</Company>
+		<Description>A utility library for IntelliTect</Description>
+		<Copyright>Copyright © IntelliTect 2019</Copyright>
+		<PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<Deterministic>true</Deterministic>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Version>1.0.1</Version>
+	</PropertyGroup>
+	<ItemGroup>
+		<CodeAnalysisDictionary Include="CustomDictionary.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<Target Name="IncludeExeInPackage">
+		<ItemGroup>
+			<TfmSpecificPackageFile Include="$(ProjectDir)Build\*.targets">
+				<PackagePath>build\$(TargetFramework)</PackagePath>
+			</TfmSpecificPackageFile>
+		</ItemGroup>
+	</Target>
 </Project>
