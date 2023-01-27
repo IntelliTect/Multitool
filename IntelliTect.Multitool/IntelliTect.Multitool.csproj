@@ -23,11 +23,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
-	<Target Name="IncludeExeInPackage">
-		<ItemGroup>
-			<TfmSpecificPackageFile Include="$(ProjectDir)Build\*.targets">
-				<PackagePath>build\$(TargetFramework)</PackagePath>
-			</TfmSpecificPackageFile>
-		</ItemGroup>
-	</Target>
+	<ItemGroup>
+		<None Include="Build/IntelliTect.Multitool.targets" Pack="true" PackagePath="build\IntelliTect.Multitool.targets"/>
+	</ItemGroup>
 </Project>
