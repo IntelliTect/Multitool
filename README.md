@@ -6,12 +6,12 @@
 
 ### IntelliTect.Multitool
 
-* AssemblyInfo: Gets an assembly's linker date/time as shown in [IntelliTect's Blog](https://intellitect.com/blog/displaying-deploymentbuild-date-web-pages/).
+* ReleaseDateAttribute: Gets an UTC DateTime from compile time.
   * Example Usage:
 
   ```csharp
   // This example is in cshtml.
-  @(AssemblyInfo.Date.ToString("yyyy-MM-dd HH-mm"))
+  @(ReleaseDateAttribute.GetReleaseDate() // Returns a time in UTC
   ```
 
 * RepositoryPaths: Provides consistent environment-independent normalized pathing within a repository.
