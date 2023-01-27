@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+	<Import Project="../IntelliTect.Multitool/Build/IntelliTect.Multitool.targets"/>
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 

@@ -1,0 +1,7 @@
+﻿<Project>
+	<ItemGroup>
+		<AssemblyAttribute Include="IntelliTect.Multitool.ReleaseDate">
+			<_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+</Project>
