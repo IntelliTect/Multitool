@@ -11,7 +11,7 @@
 
   ```csharp
   // This example is in cshtml.
-  @(ReleaseDateAttribute.GetReleaseDate() // Returns a time in UTC
+  @ReleaseDateAttribute.GetReleaseDate() // Returns a time in UTC
   ```
 
 * RepositoryPaths: Provides consistent environment-independent normalized pathing within a repository.
