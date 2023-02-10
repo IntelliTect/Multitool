@@ -1,10 +1,10 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Reflection;
 
 namespace IntelliTect.Multitool;
 
 /// <summary>
-/// The release date assembly attribute.
+/// The release date assembly attribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Assembly)]
 public class ReleaseDateAttribute : Attribute
