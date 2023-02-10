@@ -10,12 +10,12 @@ namespace IntelliTect.Multitool;
 public class ReleaseDateAttribute : Attribute
 {
     /// <summary> 
-    /// Constructor called from csproj file
+    /// Constructor called from .targets file
     /// </summary>
     /// <param name="utcDateString">A utc O (round-trip date/time) format string</param>
     public ReleaseDateAttribute(string utcDateString)
     {
-        ReleaseDate = DateTime.ParseExact(utcDateString, "O", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+        ReleaseDate = DateTime.ParseExact(utcDateString, "O", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
     }
     /// <summary>
     /// The date the assembly was built
