@@ -9,7 +9,7 @@
 * ReleaseDateAttribute: Gets an UTC DateTime from compile time.
   * Example Usage:
 
-  ```csharp
+  ```cshtml
   // This example is in cshtml.
   @ReleaseDateAttribute.GetReleaseDate() // Returns a time in UTC
   ```
