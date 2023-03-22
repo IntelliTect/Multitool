@@ -34,7 +34,7 @@
 
   ```csharp
   // In this case, the GetDefaultRepoRoot() method can be used to get the root of a repository.
-  string fullPathToTheFile = Path.Combine(RepositoryPaths.GetDefaultRepoRoot(), "TheFile.txt");
+  string fullPathToTheFile = Path.Combine(IntelliTect.Multitool.RepositoryPaths.GetDefaultRepoRoot(), "TheFile.txt");
   ```
 
 ### IntelliTect.Multitool.Security
