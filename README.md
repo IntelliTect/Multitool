@@ -6,7 +6,7 @@
 
 ### IntelliTect.Multitool
 
-* ReleaseDateAttribute: Gets an UTC DateTime from compile time.
+* ReleaseDateAttribute: Gets an UTC DateTime from compile time. Allows us to determine the build date/time.
   * Example Usage:
   
   ```cs
