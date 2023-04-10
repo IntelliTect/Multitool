@@ -1,5 +1,11 @@
 # [IntelliTect.Multitool](https://www.nuget.org/packages/IntelliTect.Multitool/): [![NuGet](https://img.shields.io/nuget/v/IntelliTect.Multitool.svg)](https://www.nuget.org/packages/IntelliTect.Multitool/)
 
+## Install instructions
+
+1. Add package to project from [Nuget.org](https://www.nuget.org/packages/IntelliTect.Multitool/). More instructions to get started with consuming nuget packages can be found on [learn.microsoft.com](https://learn.microsoft.com/nuget/install-nuget-client-tools)
+2. All tools are under the `IntelliTect.Multitool` namespace.
+3. That's it! Please open an issue if you have any problems with any of these steps or have other questions.
+
 ## ReleaseDateAttribute - Gets an UTC DateTime of compile time. Allows us to determine the build date/time
 
 ### Samples:
@@ -46,6 +52,6 @@
 
 ## Contributing
 
--------
-
 See the CONTRIBUTING.md file [here](https://github.com/IntelliTect/Multitool/blob/main/CONTRIBUTING.md).
+
+If you have any problems, please feel free to check for existing [issues](https://github.com/IntelliTect/Multitool/issues) or open an [new issue](https://github.com/IntelliTect/Multitool/issues/new).
