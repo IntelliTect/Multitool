@@ -8,6 +8,8 @@
 
 ## ReleaseDateAttribute - Gets an UTC DateTime of compile time. Allows us to determine the build date/time
 
+### Blog Post/Additional Information: [How To Display the Build Date of a .NET Application](https://intellitect.com/blog/build-date-net-application/)
+
 ### Samples:
 
 - Assignment of GetReleaseDate() to a local variable
