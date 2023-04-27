@@ -1,9 +1,8 @@
-﻿using IntelliTect.Multitool.Security;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security.Principal;
 using Xunit;
 
-namespace IntelliTect.Multitool.Tests;
+namespace IntelliTect.Multitool.Extensions.Tests;
 
 public class ClaimsPrincipalGetRolesTests
 {

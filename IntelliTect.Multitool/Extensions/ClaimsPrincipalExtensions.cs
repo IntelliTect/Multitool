@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace IntelliTect.Multitool.Security;
+namespace IntelliTect.Multitool.Extensions;
 
 /// <summary>
 /// Gets information from a <see cref="ClaimsPrincipal"/>

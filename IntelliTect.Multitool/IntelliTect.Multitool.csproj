@@ -24,6 +24,6 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="Build/IntelliTect.Multitool.targets" Pack="true" PackagePath="build\IntelliTect.Multitool.targets"/>
+		<None Include="Build/IntelliTect.Multitool.targets" Pack="true" PackagePath="build\IntelliTect.Multitool.targets" />
 	</ItemGroup>
 </Project>
