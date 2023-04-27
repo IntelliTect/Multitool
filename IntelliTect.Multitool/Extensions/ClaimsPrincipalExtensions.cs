@@ -27,7 +27,6 @@ public static class ClaimsPrincipalExtensions
         return claim.Value;
     }
 
-
     /// <summary>
     /// Gets all the roles a <see cref="ClaimsPrincipal"/> belongs to.
     /// </summary>
