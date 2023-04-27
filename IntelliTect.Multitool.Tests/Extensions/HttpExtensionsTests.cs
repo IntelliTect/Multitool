@@ -2,9 +2,9 @@
 
 namespace IntelliTect.Multitool.Extensions.Tests;
 
-public class UriExtensionsTests
+public class HttpExtensionsTests
 {
-    static UriExtensionsTests()
+    static HttpExtensionsTests()
     {
         HttpClient = new HttpClient();
     }

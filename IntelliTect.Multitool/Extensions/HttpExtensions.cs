@@ -3,7 +3,7 @@
 /// <summary>
 /// Various Uri Extensions
 /// </summary>
-public static class UriExtensions
+public static class HttpExtensions
 {
     /// <summary>
     /// Validates a Uri by attempting to make a GET request to it.
