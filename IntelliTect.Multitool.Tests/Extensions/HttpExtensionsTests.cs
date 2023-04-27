@@ -17,6 +17,6 @@ public class HttpExtensionsTests
     [InlineData("https://api.github.com/meta", true)]
     public async void ValidateUri_CheckUrl_SuccessIsAsExpected(string urlUnderTest, bool expected)
     {
-        Assert.Equal(expected, await HttpClient.ValidateUri(new Uri(urlUnderTest)));
+        Assert.Equal(expected, await HttpClient.ValidateUri(new Uri(urlUnderTest), "IntelliTect.Multitool.Testing"));
     }
 }
