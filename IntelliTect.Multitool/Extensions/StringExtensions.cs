@@ -53,11 +53,11 @@ public static class StringExtensions
     /// <summary>
     /// Validates a URL string by checking to make sure the string is formatted correctly.
     /// </summary>
-    /// <param name="hyperlink">The url string to check.</param>
+    /// <param name="url">The url string to check.</param>
     /// <returns>Result of validation.</returns>
-    public static bool ValidateUrlString(this string hyperlink)
+    public static bool ValidateUrlString(this string url)
     {
-        return Uri.IsWellFormedUriString(hyperlink, UriKind.Absolute) &&
-            Uri.TryCreate(hyperlink, UriKind.Absolute, out _);
+        return Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
+            Uri.TryCreate(url, UriKind.Absolute, out _);
     }
 }
