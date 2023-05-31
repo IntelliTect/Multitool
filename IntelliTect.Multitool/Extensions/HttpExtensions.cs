@@ -12,7 +12,7 @@ public static class HttpExtensions
     /// </summary>
     /// <param name="client">The HttpClient to make the request</param>
     /// <param name="uri">The Uri to validate</param>
-    /// <param name="headerValues">Header values to add to the clients user agent request headers.</param>
+    /// <param name="headerValues">Header values to add to the clients user agent request headers. Note: Some sites require a request header.</param>
     /// <param name="completionOption">A completion option if the default completion option is not desired</param>
     /// <returns>The result of the call</returns>
     public static async Task<bool> ValidateUri(this HttpClient client, Uri uri, ProductInfoHeaderValue[]? headerValues = null, HttpCompletionOption completionOption = HttpCompletionOption.ResponseHeadersRead)
@@ -45,7 +45,7 @@ public static class HttpExtensions
     /// </summary>
     /// <param name="client">The HttpClient to make the request</param>
     /// <param name="uri">The Uri to validate</param>
-    /// <param name="headerValue">Header value to add to the clients user agent request header.</param>
+    /// <param name="headerValue">Header value to add to the clients user agent request header.  Note: Some sites require a request header.</param>
     /// <param name="completionOption">A completion option if the default completion option is not desired</param>
     /// <returns>The result of the call</returns>
     public static async Task<bool> ValidateUri(this HttpClient client, Uri uri, ProductInfoHeaderValue? headerValue, HttpCompletionOption completionOption = HttpCompletionOption.ResponseHeadersRead)
