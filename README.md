@@ -52,6 +52,11 @@
 
 - ClaimsPrincipalExtensions: Extension methods to get a user ID and roles.
 
+## Extensions
+
+- StringExtensions: Extension methods to slugify a string and to validate a string is a valid url.
+- HttpExtensions: Extension methods to validate a Uri by attempting to make a GET request to it.
+
 ## Contributing
 
 See the CONTRIBUTING.md file [here](https://github.com/IntelliTect/Multitool/blob/main/CONTRIBUTING.md).
