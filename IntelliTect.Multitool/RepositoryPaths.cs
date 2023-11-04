@@ -21,45 +21,34 @@ public static class RepositoryPaths
     /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
     {
+        bool isLiveUnitTesting = !BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
+            || IsLiveUnitTesting != "true";
+        string? gitDirectory;
         DirectoryInfo? searchStartDirectory;
-        if (!BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
-            || IsLiveUnitTesting != "true")
+        if (!isLiveUnitTesting)
         {
             searchStartDirectory = new(Directory.GetCurrentDirectory());
-            return SearchForGitDirectory(ref searchStartDirectory);
-        }
-        else
-        {
-            if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath))
+            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
             {
-                searchStartDirectory = new FileInfo(projectPath).Directory;
-                return SearchForGitDirectory(ref searchStartDirectory);
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not find the repo root directory while in Live Unit Testing.");
+                return gitDirectory;
             }
         }
-
-    }
-
-    private static string SearchForGitDirectory(ref DirectoryInfo? searchStartDirectory)
-    {
-        if (TrySearchForGitDirectory(ref searchStartDirectory, out string? gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
+        if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath))
         {
-            return gitDirectory;
+            searchStartDirectory = new FileInfo(projectPath).Directory;
+            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
+            {
+                return gitDirectory;
+            }
         }
-        else if (BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir) && !string.IsNullOrWhiteSpace(SolutionDir))
+        if (BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir) && !string.IsNullOrWhiteSpace(SolutionDir))
         {
             return Directory.Exists(SolutionDir) ? SolutionDir : throw new InvalidOperationException("SolutionDir is not a valid directory.");
         }
-        else
-        {
-            throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
-        }
+        throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
 
-    private static bool TrySearchForGitDirectory(ref DirectoryInfo? searchStartDirectory, out string? gitDirectory)
+    private static bool TrySearchForGitDirectory(DirectoryInfo? searchStartDirectory, out string? gitDirectory)
     {
         while (searchStartDirectory is not null)
         {

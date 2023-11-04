@@ -15,5 +15,15 @@ public class RepositoryPathsTests
     public void BuildVariables_BeingSetProperly()
     {
         Assert.Equal(3, RepositoryPaths.BuildVariables.Count);
+        
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out _));
+        
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("ProjectPath", out string? ProjectPath));
+        Assert.NotNull(ProjectPath);
+        Assert.NotEmpty(ProjectPath);
+        
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string SolutionDir));
+        Assert.NotNull(SolutionDir);
+        Assert.NotEmpty(SolutionDir);
     }
 }
