@@ -21,11 +21,10 @@ public static class RepositoryPaths
     /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
     {
-        bool isLiveUnitTesting = !BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
-            || IsLiveUnitTesting != "true";
         string? gitDirectory;
         DirectoryInfo? searchStartDirectory;
-        if (!isLiveUnitTesting)
+        if (!(BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
+            && IsLiveUnitTesting == "true"))
         {
             searchStartDirectory = new(Directory.GetCurrentDirectory());
             if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
