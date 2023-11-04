@@ -9,7 +9,8 @@
         <PropertyGroup>
             <LUTInformation>
                 BuildingForLiveUnitTesting::$(BuildingForLiveUnitTesting)
-                Configuration::$(Configuration)
+                SolutionDir::$(SolutionDir)
+                ProjectPath::$(ProjectPath)
             </LUTInformation>
         </PropertyGroup>
 

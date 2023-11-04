@@ -12,18 +12,8 @@ public class RepositoryPathsTests
     }
 
     [Fact]
-    public void VariablesAreGettingSet()
+    public void BuildVariables_BeingSetProperly()
     {
-        string[] value = File.ReadAllLines(Path.Combine(Path.GetTempPath(), "IntelliTect.MultiTool.BuildVariables.tmp"));
-        // Build a dictionary of the values and their associated keys from the file
-        // Example: BuildingForLiveUnitTesting::null is a value of null for the key BuildingForLiveUnitTesting
-        // If value is null or empty, set value to null in dictionary
-        Dictionary<string, string?> dictionary = value
-            .Select(line => line.Split("::"))
-            .ToDictionary(
-                           split => split[0],
-                                          split => !string.IsNullOrEmpty(split[1]) ? split[1] : null);
-        Assert.Equal(2, dictionary.Count);
-        Assert.Null(dictionary["BuildingForLiveUnitTesting"]);
+        Assert.Equal(3, RepositoryPaths.BuildVariables.Count);
     }
 }
