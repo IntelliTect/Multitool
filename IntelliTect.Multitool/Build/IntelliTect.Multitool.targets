@@ -4,4 +4,18 @@
 			<_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+
+    <Target Name="WriteLaunchers" AfterTargets="CopyFilesToOutputDirectory">
+        <PropertyGroup>
+            <LUTInformation>
+                BuildingForLiveUnitTesting::$(BuildingForLiveUnitTesting)
+                Configuration::$(Configuration)
+            </LUTInformation>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+          File="$(Temp)\IntelliTect.MultiTool.BuildVariables.tmp"
+          Overwrite="true"
+          Lines="$(LUTInformation)" />
+    </Target>
 </Project>
