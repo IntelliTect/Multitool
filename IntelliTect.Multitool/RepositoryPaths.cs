@@ -7,9 +7,13 @@ namespace IntelliTect.Multitool;
 public static class RepositoryPaths
 {
     /// <summary>
+    /// Name of the build variables file that is created by the build process.
+    /// </summary>
+    public static string buildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
+    /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
     /// </summary>
-    public static readonly ReadOnlyDictionary<string, string?> BuildVariables = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), "IntelliTect.MultiTool.BuildVariables.tmp"))
+    public static readonly ReadOnlyDictionary<string, string?> BuildVariables = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), buildVariableFileName))
         .Select(line => line.Split("::"))
         .ToDictionary(split => split[0].Trim(),
         split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));
