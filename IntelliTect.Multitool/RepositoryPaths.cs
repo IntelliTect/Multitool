@@ -10,6 +10,7 @@ public static class RepositoryPaths
     /// Name of the build variables file that is created by the build process.
     /// </summary>
     public static string buildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
+
     /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
     /// </summary>
@@ -20,6 +21,7 @@ public static class RepositoryPaths
 
     /// <summary>
     /// Finds the root of the repository by looking for the .git folder.
+    /// Begins by searching from the current directory, and trying again from the project directory if not found
     /// Defaults to the solution directory if available if the .git folder is not found.
     /// </summary>
     /// <returns>Full path to repo root.</returns>
@@ -27,6 +29,8 @@ public static class RepositoryPaths
     {
         string? gitDirectory;
         DirectoryInfo? searchStartDirectory;
+
+        // If not live unit testing, try searching from current directory. But if we are this will fail, so just skip
         if (!(BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
             && IsLiveUnitTesting == "true"))
         {
@@ -36,6 +40,7 @@ public static class RepositoryPaths
                 return gitDirectory;
             }
         }
+        // Search from the project directory if we are live unit testing or if the initial search failed.
         if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath))
         {
             searchStartDirectory = new FileInfo(projectPath).Directory;
@@ -44,6 +49,7 @@ public static class RepositoryPaths
                 return gitDirectory;
             }
         }
+        // If all this fails, try returning the Solution Directory in hopes that is in the root of the repo.
         if (BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir) && !string.IsNullOrWhiteSpace(SolutionDir))
         {
             return Directory.Exists(SolutionDir) ? SolutionDir : throw new InvalidOperationException("SolutionDir is not a valid directory.");

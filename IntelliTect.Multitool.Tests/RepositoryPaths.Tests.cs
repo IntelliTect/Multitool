@@ -22,7 +22,7 @@ public class RepositoryPathsTests
         Assert.NotNull(ProjectPath);
         Assert.NotEmpty(ProjectPath);
         
-        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string SolutionDir));
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir));
         Assert.NotNull(SolutionDir);
         Assert.NotEmpty(SolutionDir);
     }
