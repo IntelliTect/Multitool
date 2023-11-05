@@ -9,7 +9,7 @@ public static class RepositoryPaths
     /// <summary>
     /// Name of the build variables file that is created by the build process.
     /// </summary>
-    public static string buildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
+    public const string buildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
 
     /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
@@ -20,14 +20,14 @@ public static class RepositoryPaths
         split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));
 
     /// <summary>
-    /// Finds the root of the repository by looking for the .git folder.
-    /// Begins by searching from the current directory, and trying again from the project directory if not found
-    /// Defaults to the solution directory if available if the .git folder is not found.
+    /// Finds the root of the repository by looking the directory containing the .git folder.
+    /// Begins searching up from the current directory, and retries from the project directory if initially not found.
+    /// Defaults to the solution directory, if available, if the .git folder is not found.
     /// </summary>
     /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
     {
-        string? gitDirectory;
+        string gitDirectory;
         DirectoryInfo? searchStartDirectory;
 
         // If not live unit testing, try searching from current directory. But if we are this will fail, so just skip
@@ -35,7 +35,8 @@ public static class RepositoryPaths
             && IsLiveUnitTesting == "true"))
         {
             searchStartDirectory = new(Directory.GetCurrentDirectory());
-            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
+            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory)
+                && !string.IsNullOrWhiteSpace(gitDirectory))
             {
                 return gitDirectory;
             }
@@ -44,7 +45,8 @@ public static class RepositoryPaths
         if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath))
         {
             searchStartDirectory = new FileInfo(projectPath).Directory;
-            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory) && !string.IsNullOrWhiteSpace(gitDirectory))
+            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory)
+                && !string.IsNullOrWhiteSpace(gitDirectory))
             {
                 return gitDirectory;
             }
@@ -57,20 +59,26 @@ public static class RepositoryPaths
         throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
 
-    private static bool TrySearchForGitDirectory(DirectoryInfo? searchStartDirectory, out string? gitDirectory)
+    /// <summary>
+    /// Searches up from the <paramref name="searchStartDirectory"/> looking for a .git directory.
+    /// </summary>
+    /// <param name="searchStartDirectory">The directory to start searching from, will search up.</param>
+    /// <param name="gitParentDirectory">The parent directory to the .git directory.</param>
+    /// <returns><c>true</c> if the directory <paramref name="gitParentDirectory" /> was found successfully; otherwise, false.</returns>
+    public static bool TrySearchForGitDirectory(DirectoryInfo? searchStartDirectory, out string gitParentDirectory)
     {
         while (searchStartDirectory is not null)
         {
             DirectoryInfo[] subDirectories = searchStartDirectory.GetDirectories(".git");
             if (subDirectories.Length > 0)
             {
-                gitDirectory = searchStartDirectory.FullName;
+                gitParentDirectory = searchStartDirectory.FullName;
                 return true;
             }
 
             searchStartDirectory = searchStartDirectory.Parent;
         }
-        gitDirectory = default;
+        gitParentDirectory = string.Empty;
         return false;
     }
 }
