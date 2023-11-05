@@ -20,9 +20,9 @@ public static class RepositoryPaths
         split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));
 
     /// <summary>
-    /// Finds the root of the repository by looking the directory containing the .git folder.
+    /// Finds the root of the repository by looking for the directory containing the .git directory.
     /// Begins searching up from the current directory, and retries from the project directory if initially not found.
-    /// Defaults to the solution directory, if available, if the .git folder is not found.
+    /// Defaults to the solution directory, if available, if the .git directory is not found.
     /// </summary>
     /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
