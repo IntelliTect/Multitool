@@ -35,7 +35,7 @@ public static class RepositoryPaths
             && IsLiveUnitTesting == "true"))
         {
             searchStartDirectory = new(Directory.GetCurrentDirectory());
-            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory)
+            if (TrySearchForGitContainingDirectory(searchStartDirectory, out gitDirectory)
                 && !string.IsNullOrWhiteSpace(gitDirectory))
             {
                 return gitDirectory;
@@ -45,7 +45,7 @@ public static class RepositoryPaths
         if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath))
         {
             searchStartDirectory = new FileInfo(projectPath).Directory;
-            if (TrySearchForGitDirectory(searchStartDirectory, out gitDirectory)
+            if (TrySearchForGitContainingDirectory(searchStartDirectory, out gitDirectory)
                 && !string.IsNullOrWhiteSpace(gitDirectory))
             {
                 return gitDirectory;
@@ -65,7 +65,7 @@ public static class RepositoryPaths
     /// <param name="searchStartDirectory">The directory to start searching from, will search up.</param>
     /// <param name="gitParentDirectory">The parent directory to the .git directory.</param>
     /// <returns><c>true</c> if the directory <paramref name="gitParentDirectory" /> was found successfully; otherwise, false.</returns>
-    public static bool TrySearchForGitDirectory(DirectoryInfo? searchStartDirectory, out string gitParentDirectory)
+    public static bool TrySearchForGitContainingDirectory(DirectoryInfo? searchStartDirectory, out string gitParentDirectory)
     {
         while (searchStartDirectory is not null)
         {
