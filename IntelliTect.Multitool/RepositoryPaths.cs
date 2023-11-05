@@ -77,7 +77,7 @@ public static class RepositoryPaths
             }
 
             searchStartDirectory = searchStartDirectory.Parent;
-        }
+        } 
         gitParentDirectory = string.Empty;
         return false;
     }
