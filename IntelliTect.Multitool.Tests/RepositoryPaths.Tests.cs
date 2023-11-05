@@ -18,12 +18,12 @@ public class RepositoryPathsTests
         
         Assert.True(RepositoryPaths.BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out _));
         
-        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("ProjectPath", out string? ProjectPath));
-        Assert.NotNull(ProjectPath);
-        Assert.NotEmpty(ProjectPath);
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("ProjectPath", out string? projectPath));
+        Assert.NotNull(projectPath);
+        Assert.NotEmpty(projectPath);
         
-        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir));
-        Assert.NotNull(SolutionDir);
-        Assert.NotEmpty(SolutionDir);
+        Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string? solutionDir));
+        Assert.NotNull(solutionDir);
+        Assert.NotEmpty(solutionDir);
     }
 }

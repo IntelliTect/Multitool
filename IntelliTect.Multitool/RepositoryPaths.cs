@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 
 namespace IntelliTect.Multitool;
+
 /// <summary>
 /// Provides consistent environment-independent normalized pathing within a repository.
 /// </summary>
@@ -9,12 +10,12 @@ public static class RepositoryPaths
     /// <summary>
     /// Name of the build variables file that is created by the build process.
     /// </summary>
-    public const string buildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
+    public const string BuildVariableFileName = "IntelliTect.MultiTool.BuildVariables.tmp";
 
     /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
     /// </summary>
-    public static readonly ReadOnlyDictionary<string, string?> BuildVariables = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), buildVariableFileName))
+    public static ReadOnlyDictionary<string, string?> BuildVariables { get; } = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), BuildVariableFileName))
         .Select(line => line.Split("::"))
         .ToDictionary(split => split[0].Trim(),
         split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));
@@ -31,8 +32,8 @@ public static class RepositoryPaths
         DirectoryInfo? searchStartDirectory;
 
         // If not live unit testing, try searching from current directory. But if we are this will fail, so just skip
-        if (!(BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? IsLiveUnitTesting)
-            && IsLiveUnitTesting == "true"))
+        if (!(BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out string? isLiveUnitTesting)
+            && isLiveUnitTesting == "true"))
         {
             searchStartDirectory = new(Directory.GetCurrentDirectory());
             if (TrySearchForGitContainingDirectory(searchStartDirectory, out gitDirectory)
@@ -52,9 +53,9 @@ public static class RepositoryPaths
             }
         }
         // If all this fails, try returning the Solution Directory in hopes that is in the root of the repo.
-        if (BuildVariables.TryGetValue("SolutionDir", out string? SolutionDir) && !string.IsNullOrWhiteSpace(SolutionDir))
+        if (BuildVariables.TryGetValue("SolutionDir", out string? solutionDir) && !string.IsNullOrWhiteSpace(solutionDir))
         {
-            return Directory.Exists(SolutionDir) ? SolutionDir : throw new InvalidOperationException("SolutionDir is not a valid directory.");
+            return Directory.Exists(solutionDir) ? solutionDir : throw new InvalidOperationException($"SolutionDir is not a valid directory.");
         }
         throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
