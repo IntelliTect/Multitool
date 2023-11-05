@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace IntelliTect.Multitool.Tests;
 

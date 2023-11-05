@@ -4,4 +4,20 @@
 			<_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+
+    <Target Name="WriteLaunchers" AfterTargets="CopyFilesToOutputDirectory">
+        <PropertyGroup>
+            <TempStagingPath Condition="'$(TempStagingPath)' == ''">$([System.IO.Path]::GetTempPath())</TempStagingPath>
+            <LUTInformation>
+                BuildingForLiveUnitTesting::$(BuildingForLiveUnitTesting)
+                SolutionDir::$(SolutionDir)
+                ProjectPath::$(ProjectPath)
+            </LUTInformation>
+        </PropertyGroup>
+
+        <WriteLinesToFile
+          File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp"
+          Overwrite="true"
+          Lines="$(LUTInformation)" />
+    </Target>
 </Project>
