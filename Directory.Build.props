@@ -3,7 +3,7 @@
   	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   	<PackageProjectUrl>https://github.com/IntelliTect/Multitool</PackageProjectUrl>
   	<RepositoryUrl>https://github.com/IntelliTect/Multitool</RepositoryUrl>
-  	<Authors>IntelliTect</Authors>
+  	<Authors>Benjamin Michaelis, IntelliTect</Authors>
   	<!-- Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
   	<PublishRepositoryUrl>true</PublishRepositoryUrl>
   
