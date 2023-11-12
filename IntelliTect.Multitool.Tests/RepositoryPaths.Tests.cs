@@ -26,4 +26,19 @@ public class RepositoryPathsTests
         Assert.NotNull(solutionDir);
         Assert.NotEmpty(solutionDir);
     }
+
+    [Fact]
+    public void TrySearchForGitContainingDirectory_ReturnsTrueWhenFound()
+    {
+        Assert.True(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(Directory.GetCurrentDirectory()), out string gitParentDirectory));
+        // Makes the assumption that the repository directory for this solution is named the same as the solution
+        Assert.EndsWith(nameof(Multitool), gitParentDirectory);
+    }
+
+    [Fact]
+    public void TrySearchForGitContainingDirectory_ReturnsFalseWhenNotFound()
+    {
+        Assert.False(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(Path.GetPathRoot(Directory.GetCurrentDirectory())), out string gitParentDirectory));
+        Assert.Empty(gitParentDirectory);
+    }
 }
