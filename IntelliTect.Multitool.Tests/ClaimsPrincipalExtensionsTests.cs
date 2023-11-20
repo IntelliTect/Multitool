@@ -6,6 +6,9 @@ namespace IntelliTect.Multitool.Security.Tests;
 
 public class ClaimsPrincipalExtensionsTests
 {
+    static readonly string[] roles = new[] { "Foo", "Bar" };
+    static readonly string[] singleRole = new[] { "Bar" };
+
     [Fact]
     public void GetRoles_WhenClaimsPrincipalNull_Should_Throw()
     {
@@ -25,7 +28,7 @@ public class ClaimsPrincipalExtensionsTests
     [Fact]
     public void GetRoles_WhenClaimsPrincipalHasRoles_Should_ReturnNotEmpty()
     {
-        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Uncle Festus"), new[] { "Foo", "Bar" });
+        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Uncle Festus"), roles);
 
         Assert.Collection(sut.GetRoles(), s => Assert.Equal("Foo", s), t => Assert.Equal("Bar", t));
     }
@@ -49,7 +52,7 @@ public class ClaimsPrincipalExtensionsTests
     [Fact]
     public void GetUserId_WhenClaimsPrincipalHasId_Should_ReturnString()
     {
-        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Taki The Frog"), new[] { "Bar" });
+        ClaimsPrincipal sut = new GenericPrincipal(new GenericIdentity("Taki The Frog"), singleRole);
 
         Assert.Equal("Taki The Frog", sut.GetUserId());
     }

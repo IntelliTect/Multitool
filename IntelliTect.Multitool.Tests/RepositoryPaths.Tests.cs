@@ -15,13 +15,13 @@ public class RepositoryPathsTests
     public void BuildVariables_BeingSetProperly()
     {
         Assert.Equal(3, RepositoryPaths.BuildVariables.Count);
-        
+
         Assert.True(RepositoryPaths.BuildVariables.TryGetValue("BuildingForLiveUnitTesting", out _));
-        
+
         Assert.True(RepositoryPaths.BuildVariables.TryGetValue("ProjectPath", out string? projectPath));
         Assert.NotNull(projectPath);
         Assert.NotEmpty(projectPath);
-        
+
         Assert.True(RepositoryPaths.BuildVariables.TryGetValue("SolutionDir", out string? solutionDir));
         Assert.NotNull(solutionDir);
         Assert.NotEmpty(solutionDir);
@@ -38,7 +38,9 @@ public class RepositoryPathsTests
     [Fact]
     public void TrySearchForGitContainingDirectory_ReturnsFalseWhenNotFound()
     {
-        Assert.False(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(Path.GetPathRoot(Directory.GetCurrentDirectory())), out string gitParentDirectory));
+        string? path = Path.GetPathRoot(Directory.GetCurrentDirectory());
+        Assert.NotNull(path);
+        Assert.False(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(path), out string gitParentDirectory));
         Assert.Empty(gitParentDirectory);
     }
 }

@@ -33,5 +33,5 @@ public class ReleaseDateAttribute : Attribute
         object[]? attribute = (assembly ?? Assembly.GetEntryAssembly())?.GetCustomAttributes(typeof(ReleaseDateAttribute), false);
         return attribute?.Length >= 1 ? ((ReleaseDateAttribute)attribute[0]).ReleaseDate : null;
     }
-    
+
 }
