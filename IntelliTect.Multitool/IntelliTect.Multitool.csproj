@@ -4,7 +4,7 @@
 		<OutputType>Library</OutputType>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Company>IntelliTect-Nuget</Company>
+		<Company>IntelliTect</Company>
 		<Description>A utility library for IntelliTect</Description>
 		<Copyright>Copyright © IntelliTect 2019</Copyright>
 		<PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
@@ -25,5 +25,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="Build/IntelliTect.Multitool.targets" Pack="true" PackagePath="build\IntelliTect.Multitool.targets" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.SourceLink.GitHub">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 </Project>

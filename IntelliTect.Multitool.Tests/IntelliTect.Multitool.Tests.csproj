@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<Import Project="../IntelliTect.Multitool/Build/IntelliTect.Multitool.targets" />
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1; net6.0; net8.0</TargetFrameworks>
