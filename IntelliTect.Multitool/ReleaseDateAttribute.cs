@@ -4,11 +4,8 @@ using System.Reflection;
 namespace IntelliTect.Multitool;
 
 /// <summary>
-/// The release date assembly attribute
+/// The release date assembly attribute with a constructor that takes in a DateTime string
 /// </summary>
-/// <remarks> 
-/// Constructor that takes in a DateTime string
-/// </remarks>
 /// <param name="utcDateString">A DateTime 'O' (round-trip date/time) format string</param>
 [AttributeUsage(AttributeTargets.Assembly)]
 public class ReleaseDateAttribute(string utcDateString) : Attribute
