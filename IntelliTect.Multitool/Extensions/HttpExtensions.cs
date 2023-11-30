@@ -50,6 +50,6 @@ public static class HttpExtensions
     /// <returns>The result of the call</returns>
     public static async Task<bool> ValidateUri(this HttpClient client, Uri uri, ProductInfoHeaderValue? headerValue, HttpCompletionOption completionOption = HttpCompletionOption.ResponseHeadersRead)
     {
-        return await ValidateUri(client, uri, headerValue is null ? null : new ProductInfoHeaderValue[] { headerValue }, completionOption);
+        return await ValidateUri(client, uri, headerValue is null ? null : [headerValue], completionOption);
     }
 }
