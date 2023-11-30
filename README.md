@@ -51,11 +51,28 @@
 ## Security
 
 - ClaimsPrincipalExtensions: Extension methods to get a user ID and roles.
+  - `GetUserId`
+  - `GetRoles`
 
 ## Extensions
 
-- StringExtensions: Extension methods to slugify a string and to validate a string is a valid url.
-- HttpExtensions: Extension methods to validate a Uri by attempting to make a GET request to it.
+- StringExtensions: Extension methods for `System.String`
+  - `ValidateUrlString`: Extension method to validate a URL string by checking to make sure the string is formatted correctly.
+  - `CreateUrlSlug`: Extension method modify a string so that it is URL compatible
+- HttpExtensions: Extension methods for `System.Net.Http.HttpClient`
+  `ValidateUri`: Extension methods to validate a Uri by attempting to make a GET request to it.
+- SystemLinqExtensions
+  - `WhereNotNull`: Extension method to allow return of non-null value from a null object.
+    - Sample:
+
+      ```csharp
+      List<string?> listWithSomeNullValues = ["this", null, "is", null, "my", null, "favorite", null];
+      List<string> listWithoutNullValues = listWithSomeNullValues.WhereNotNull().ToList();
+      // returns ["this", "is", "my", "favorite"]
+      ```
+
+    - On:
+      - `System.Linq.Generic.IEnumerable<T>`
 
 ## Contributing
 
