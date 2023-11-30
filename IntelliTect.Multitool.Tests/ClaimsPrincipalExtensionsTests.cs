@@ -6,8 +6,8 @@ namespace IntelliTect.Multitool.Security.Tests;
 
 public class ClaimsPrincipalExtensionsTests
 {
-    static readonly string[] roles = new[] { "Foo", "Bar" };
-    static readonly string[] singleRole = new[] { "Bar" };
+    static readonly string[] roles = ["Foo", "Bar"];
+    static readonly string[] singleRole = ["Bar"];
 
     [Fact]
     public void GetRoles_WhenClaimsPrincipalNull_Should_Throw()
