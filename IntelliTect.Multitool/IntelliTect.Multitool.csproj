@@ -7,7 +7,7 @@
 		<Company>IntelliTect</Company>
 		<Description>A utility library for IntelliTect</Description>
 		<Copyright>Copyright © IntelliTect 2019</Copyright>
-		<PackageTags>IntelliTect, Utilities, Multitool</PackageTags>
+		<PackageTags>IntelliTect, Utilities, Multitool, DotNet, DotNetTool, csharp, aspnet, extensions</PackageTags>
 		<RepositoryType>git</RepositoryType>
 		<Deterministic>true</Deterministic>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
