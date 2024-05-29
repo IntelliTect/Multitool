@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../IntelliTect.Multitool/Build/IntelliTect.Multitool.targets" />
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1; net6.0; net8.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' != 'true'">
+    <!-- We want to make sure our CI property works properly on the runner, this is just to run tests locally -->
+    <!-- We don't use the $CI condition since that is the one under test -->
       <ReleaseDateAttribute>true</ReleaseDateAttribute>
   </PropertyGroup>
 
