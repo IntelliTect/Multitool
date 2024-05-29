@@ -37,6 +37,10 @@
   // Result is "Build: 8 Feb, 2023 11:36:31 AM"
   ```
 
+### Miscellaneous Information:
+
+- To help [hot reload in visual studio work properly](https://github.com/IntelliTect/Multitool/issues/125), the release date attribute will be automatically be generated during compilation on a CI runner, but it won’t generate locally by default. If you want it to generate locally, set the `ReleaseDateAttribute` to true within a property group in your project file. (`<ReleaseDateAttribute>true</ReleaseDateAttribute>`)
+
 ## RepositoryPaths - Provides consistent environment-independent normalized pathing within a git repository
 
 ### Samples:
