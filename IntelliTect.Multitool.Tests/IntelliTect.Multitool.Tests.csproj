@@ -6,6 +6,10 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup>
+      <ReleaseDateAttribute>true></ReleaseDateAttribute>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
