@@ -18,10 +18,6 @@
                      '$(CODEBUILD_CI)' == 'true'">true</CI>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <ReleaseDateAttribute>true</ReleaseDateAttribute>
-    </PropertyGroup>
-
     <Target Name="WriteLaunchers" AfterTargets="CopyFilesToOutputDirectory">
         <PropertyGroup>
             <TempStagingPath Condition="'$(TempStagingPath)' == ''">$([System.IO.Path]::GetTempPath())</TempStagingPath>

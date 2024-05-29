@@ -8,6 +8,10 @@
 
 ## ReleaseDateAttribute - Gets an UTC DateTime of compile time. Allows us to determine the build date/time
 
+### How to use
+
+- To help [hot reload in visual studio work properly](https://github.com/IntelliTect/Multitool/issues/125), the release date attribute will be automatically be generated during compilation on a CI runner, but it won’t generate locally by default. If you want it to generate locally, set the `ReleaseDateAttribute` to true within a property group in your project file. (`<ReleaseDateAttribute>true</ReleaseDateAttribute>`)
+
 ### Blog Post/Additional Information: [How To Display the Build Date of a .NET Application](https://intellitect.com/blog/build-date-net-application/)
 
 ### Samples:
