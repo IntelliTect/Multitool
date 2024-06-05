@@ -1,6 +1,6 @@
 ﻿<Project>
     <ItemGroup>
-        <AssemblyAttribute Condition="'$(CI)' == 'true' OR '$(ReleaseDateAttribute)' == 'true'" Include="IntelliTect.Multitool.ReleaseDate">
+        <AssemblyAttribute Condition="'$(CI)' != '' OR '$(ReleaseDateAttribute)' == 'true'" Include="IntelliTect.Multitool.ReleaseDate">
             <_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
