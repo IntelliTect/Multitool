@@ -1,10 +1,4 @@
-﻿<Project>
-    <ItemGroup>
-        <AssemblyAttribute Condition="'$(CI)' != '' OR '$(ReleaseDateAttribute)' == 'true'" Include="IntelliTect.Multitool.ReleaseDate">
-            <_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
-        </AssemblyAttribute>
-    </ItemGroup>
-
+<Project>
     <PropertyGroup Label="CI" Condition="'$(CI)' == ''">
       <CI>false</CI>
       <!-- GH, CircleCI, GitLab and BitBucket already use CI -->
@@ -17,6 +11,12 @@
                      '$(BUDDY)' == 'true' or
                      '$(CODEBUILD_CI)' == 'true'">true</CI>
     </PropertyGroup>
+
+    <ItemGroup Condition="('$(CI)' == 'true' AND '$(Deterministic)' != 'true' AND '$(ReleaseDateAttribute)' != 'true') OR '$(ReleaseDateAttribute)' == 'true'">
+        <AssemblyAttribute Include="IntelliTect.Multitool.ReleaseDate">
+            <_Parameter1>$([System.DateTime]::UtcNow.ToString("O"))</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
     <Target Name="WriteLaunchers" AfterTargets="CopyFilesToOutputDirectory">
         <PropertyGroup>
