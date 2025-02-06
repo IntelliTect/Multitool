@@ -52,12 +52,6 @@
   string fullPathToTheFile = Path.Combine(IntelliTect.Multitool.RepositoryPaths.GetDefaultRepoRoot(), "TheFile.txt");
   ```
 
-## Security
-
-- ClaimsPrincipalExtensions: Extension methods to get a user ID and roles.
-  - `GetUserId`
-  - `GetRoles`
-
 ## Extensions
 
 - StringExtensions: Extension methods for `System.String`
