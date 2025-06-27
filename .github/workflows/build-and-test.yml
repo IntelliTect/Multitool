@@ -31,7 +31,13 @@ jobs:
     - name: Build
       run: dotnet build -p:ContinuousIntegrationBuild=True -p:ReleaseDateAttribute=True --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal
+      run: dotnet test --no-build --configuration Release --verbosity normal --logger trx --results-directory ${{ runner.temp }}
+    - name: Convert TRX to VS Playlist
+      if: failure()
+      uses: BenjaminMichaelis/trx-to-vsplaylist@v1
+      with:
+        trx-file-path: '${{ runner.temp }}/*.trx'
+        output-directory: '${{ runner.temp }}/vsplaylists'
 
   automerge:
     needs: [build-and-test]
