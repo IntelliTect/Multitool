@@ -43,4 +43,38 @@ public class RepositoryPathsTests
         Assert.False(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(path), out string gitParentDirectory));
         Assert.Empty(gitParentDirectory);
     }
+
+    [Fact]
+    public void BuildVariables_HandlesFileNotFound_Gracefully()
+    {
+        // Save current temp file if it exists
+        string tempFilePath = Path.Combine(Path.GetTempPath(), RepositoryPaths.BuildVariableFileName);
+        string? backupContent = null;
+        bool fileExisted = File.Exists(tempFilePath);
+        if (fileExisted)
+        {
+            backupContent = File.ReadAllText(tempFilePath);
+            File.Delete(tempFilePath);
+        }
+
+        try
+        {
+            // Reset the static field to force re-initialization
+            var field = typeof(RepositoryPaths).GetField("_buildVariables", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            field?.SetValue(null, null);
+
+            // Access BuildVariables when file doesn't exist - should not throw
+            var buildVars = RepositoryPaths.BuildVariables;
+            Assert.NotNull(buildVars);
+            Assert.Empty(buildVars);
+        }
+        finally
+        {
+            // Restore the file if it existed
+            if (fileExisted && backupContent != null)
+            {
+                File.WriteAllText(tempFilePath, backupContent);
+            }
+        }
+    }
 }
