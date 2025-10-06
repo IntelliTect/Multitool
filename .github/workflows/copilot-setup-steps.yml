@@ -31,9 +31,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: | 
-            3.1.x
-            8.x
+          global-json-file: global.json
       
       - name: Restore dependencies
         run: dotnet restore
