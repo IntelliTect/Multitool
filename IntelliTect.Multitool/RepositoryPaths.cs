@@ -52,21 +52,18 @@ public static class RepositoryPaths
             {
                 return gitDirectory;
             }
-        }
-        // If all this fails, try returning the Solution Directory in hopes that is in the root of the repo.
-        if (BuildVariables.TryGetValue("SolutionDir", out string? solutionDir) && !string.IsNullOrWhiteSpace(solutionDir))
-        {
-            return Directory.Exists(solutionDir) ? solutionDir : throw new InvalidOperationException($"SolutionDir is not a valid directory.");
-        }
-        // As an additional fallback, search for .sln or .slnx files from the project directory.
-        if (BuildVariables.TryGetValue("ProjectPath", out projectPath))
-        {
-            searchStartDirectory = new FileInfo(projectPath).Directory;
+
+            // As an additional fallback, search for .sln or .slnx files from the project directory.
             if (TrySearchForSolutionContainingDirectory(searchStartDirectory, out string solutionDirectory)
                 && !string.IsNullOrWhiteSpace(solutionDirectory))
             {
                 return solutionDirectory;
             }
+        }
+        // If all this fails, try returning the Solution Directory in hopes that is in the root of the repo.
+        if (BuildVariables.TryGetValue("SolutionDir", out string? solutionDir) && !string.IsNullOrWhiteSpace(solutionDir))
+        {
+            return Directory.Exists(solutionDir) ? solutionDir : throw new InvalidOperationException($"SolutionDir is not a valid directory.");
         }
         throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
@@ -104,10 +101,9 @@ public static class RepositoryPaths
     {
         while (searchStartDirectory is not null)
         {
-            FileInfo[] solutionFiles = searchStartDirectory.GetFiles("*.sln");
-            FileInfo[] slnxFiles = searchStartDirectory.GetFiles("*.slnx");
+            FileInfo[] solutionFiles = searchStartDirectory.GetFiles("*.sln*");
             
-            if (solutionFiles.Length > 0 || slnxFiles.Length > 0)
+            if (solutionFiles.Length > 0)
             {
                 solutionDirectory = searchStartDirectory.FullName;
                 return true;
