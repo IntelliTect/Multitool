@@ -24,6 +24,7 @@ public static class RepositoryPaths
     /// Finds the root of the repository by looking for the directory containing the .git directory.
     /// Begins searching up from the current directory, and retries from the project directory if initially not found.
     /// Defaults to the solution directory, if available, if the .git directory is not found.
+    /// Also searches for .sln or .slnx files as a fallback.
     /// </summary>
     /// <returns>Full path to repo root.</returns>
     public static string GetDefaultRepoRoot()
@@ -57,6 +58,16 @@ public static class RepositoryPaths
         {
             return Directory.Exists(solutionDir) ? solutionDir : throw new InvalidOperationException($"SolutionDir is not a valid directory.");
         }
+        // As an additional fallback, search for .sln or .slnx files from the project directory.
+        if (BuildVariables.TryGetValue("ProjectPath", out projectPath))
+        {
+            searchStartDirectory = new FileInfo(projectPath).Directory;
+            if (TrySearchForSolutionContainingDirectory(searchStartDirectory, out string solutionDirectory)
+                && !string.IsNullOrWhiteSpace(solutionDirectory))
+            {
+                return solutionDirectory;
+            }
+        }
         throw new InvalidOperationException("Could not find the repo root directory from the current directory. Current directory is expected to be the repoRoot sub directory.");
     }
 
@@ -80,6 +91,31 @@ public static class RepositoryPaths
             searchStartDirectory = searchStartDirectory.Parent;
         }
         gitParentDirectory = string.Empty;
+        return false;
+    }
+
+    /// <summary>
+    /// Searches up from the <paramref name="searchStartDirectory"/> looking for a .sln or .slnx file.
+    /// </summary>
+    /// <param name="searchStartDirectory">The directory to start searching from, will search up.</param>
+    /// <param name="solutionDirectory">The directory containing the .sln or .slnx file.</param>
+    /// <returns><c>true</c> if the directory <paramref name="solutionDirectory" /> was found successfully; otherwise, false.</returns>
+    public static bool TrySearchForSolutionContainingDirectory(DirectoryInfo? searchStartDirectory, out string solutionDirectory)
+    {
+        while (searchStartDirectory is not null)
+        {
+            FileInfo[] solutionFiles = searchStartDirectory.GetFiles("*.sln");
+            FileInfo[] slnxFiles = searchStartDirectory.GetFiles("*.slnx");
+            
+            if (solutionFiles.Length > 0 || slnxFiles.Length > 0)
+            {
+                solutionDirectory = searchStartDirectory.FullName;
+                return true;
+            }
+
+            searchStartDirectory = searchStartDirectory.Parent;
+        }
+        solutionDirectory = string.Empty;
         return false;
     }
 }
