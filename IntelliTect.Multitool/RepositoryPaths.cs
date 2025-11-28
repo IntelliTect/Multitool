@@ -15,10 +15,44 @@ public static class RepositoryPaths
     /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
     /// </summary>
-    public static ReadOnlyDictionary<string, string?> BuildVariables { get; } = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), BuildVariableFileName))
-        .Select(line => line.Split("::"))
-        .ToDictionary(split => split[0].Trim(),
-        split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));
+    public static ReadOnlyDictionary<string, string?> BuildVariables
+    {
+        get
+        {
+            if (_buildVariables == null)
+            {
+                _buildVariables = LoadBuildVariables();
+            }
+            return _buildVariables;
+        }
+    }
+
+    private static ReadOnlyDictionary<string, string?>? _buildVariables;
+
+    private static ReadOnlyDictionary<string, string?> LoadBuildVariables()
+    {
+        try
+        {
+            string filePath = Path.Combine(Path.GetTempPath(), BuildVariableFileName);
+            var lines = File.ReadAllLines(filePath);
+            var dictionary = lines
+                .Select(line => line.Split("::"))
+                .ToDictionary(split => split[0].Trim(),
+                split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null);
+            return new ReadOnlyDictionary<string, string?>(dictionary);
+        }
+        catch (FileNotFoundException)
+        {
+            // Return empty dictionary if the build variables file doesn't exist
+            // This can happen when the temp file is cleaned up by the OS
+            return new ReadOnlyDictionary<string, string?>(new Dictionary<string, string?>());
+        }
+        catch (DirectoryNotFoundException)
+        {
+            // Return empty dictionary if the temp directory doesn't exist
+            return new ReadOnlyDictionary<string, string?>(new Dictionary<string, string?>());
+        }
+    }
 
     /// <summary>
     /// Finds the root of the repository by looking for the directory containing the .git directory.
