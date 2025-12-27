@@ -25,11 +25,11 @@ jobs:
       with:
         global-json-file: global.json
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore IntelliTect.Multitool.sln
     - name: Build
-      run: dotnet build -p:ContinuousIntegrationBuild=True -p:ReleaseDateAttribute=True --no-restore --configuration Release
+      run: dotnet build IntelliTect.Multitool.sln -p:ContinuousIntegrationBuild=True -p:ReleaseDateAttribute=True --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal --logger trx --results-directory ${{ runner.temp }}
+      run: dotnet test IntelliTect.Multitool.sln --no-build --configuration Release --verbosity normal --logger trx --results-directory ${{ runner.temp }}
     - name: Convert TRX to VS Playlist
       if: failure()
       uses: BenjaminMichaelis/trx-to-vsplaylist@v2
