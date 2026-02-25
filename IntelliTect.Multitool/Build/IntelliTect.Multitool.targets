@@ -21,6 +21,7 @@
             </LUTInformation>
         </PropertyGroup>
 
-        <WriteLinesToFile File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" />
+        <WriteLinesToFile File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" Condition="'$(SolutionDir)' != ''" />
+        <WriteLinesToFile File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" Condition="'$(SolutionDir)' == '' AND !Exists('$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp')" />
     </Target>
 </Project>
