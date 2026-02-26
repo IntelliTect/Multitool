@@ -72,15 +72,30 @@ public class CIDetectionTests
         foreach (var (key, value) in overrides)
             globalProperties[key] = value;
 
-        using var collection = new ProjectCollection(globalProperties);
-        string xml = $"""
-            <Project>
-              <Import Project="{TargetsPath.Replace(@"\", "/")}" />
-            </Project>
-            """;
-        using var reader = XmlReader.Create(new StringReader(xml));
-        ProjectRootElement rootElement = ProjectRootElement.Create(reader, collection);
-        var project = new Project(rootElement, null, null, collection);
-        return project.GetPropertyValue("CI");
+        // CI itself is not in _ciVarNames (it's the output property, not an input condition
+        // variable), but GitHub Actions sets CI=true in the OS environment. If it leaks in,
+        // the outer <PropertyGroup Condition="'$(CI)' == ''"> guard short-circuits and the
+        // entire detection block is skipped. Temporarily remove it from the process environment
+        // so MSBuild doesn't see it, unless the caller is explicitly testing the CI=true case.
+        string? savedCI = Environment.GetEnvironmentVariable("CI");
+        if (!overrides.ContainsKey("CI"))
+            Environment.SetEnvironmentVariable("CI", null);
+        try
+        {
+            using var collection = new ProjectCollection(globalProperties);
+            string xml = $"""
+                <Project>
+                  <Import Project="{TargetsPath.Replace(@"\", "/")}" />
+                </Project>
+                """;
+            using var reader = XmlReader.Create(new StringReader(xml));
+            ProjectRootElement rootElement = ProjectRootElement.Create(reader, collection);
+            var project = new Project(rootElement, null, null, collection);
+            return project.GetPropertyValue("CI");
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("CI", savedCI);
+        }
     }
 }
