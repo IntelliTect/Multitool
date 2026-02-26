@@ -19,9 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: | 
-            3.1.x
-            8.x
+        global-json-file: global.json
     - name: Restore dependencies
       run: dotnet restore
     - name: Set Version
@@ -57,17 +55,25 @@ jobs:
     environment:
       name: 'Production'
       url: 'https://www.nuget.org/packages/IntelliTect.Multitool'
+    permissions:
+      id-token: write
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v7
         with:
           name: NuGet
-      - name: Push NuGet
+      - name: Get tag version
+        id: tag-version
         run: |
           $tagVersion = "${{ github.ref }}".substring(11)
-          echo "::set-output name=TAG_VERSION::$tagVersion"
-          dotnet nuget push IntelliTect.Multitool.$tagVersion.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
-        id: tag-version
+          echo "TAG_VERSION=$tagVersion" >> $env:GITHUB_OUTPUT
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+      - name: Push NuGet
+        run: dotnet nuget push IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
       - name: Upload nupkg to Releases
         uses: softprops/action-gh-release@v2
         with:
