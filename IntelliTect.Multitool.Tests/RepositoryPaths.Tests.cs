@@ -43,4 +43,25 @@ public class RepositoryPathsTests
         Assert.False(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(path), out string gitParentDirectory));
         Assert.Empty(gitParentDirectory);
     }
+
+    [Fact]
+    public void TrySearchForGitContainingDirectory_ReturnsTrueWhenGitIsAFile()
+    {
+        // In a git worktree, .git is a file (gitfile pointer), not a directory.
+        // This test simulates that scenario.
+        string tempRoot = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+        string subDir = Path.Combine(tempRoot, "subdir");
+        try
+        {
+            Directory.CreateDirectory(subDir);
+            File.WriteAllText(Path.Combine(tempRoot, ".git"), "gitdir: ../.git/worktrees/my-branch");
+
+            Assert.True(RepositoryPaths.TrySearchForGitContainingDirectory(new DirectoryInfo(subDir), out string gitParentDirectory));
+            Assert.Equal(tempRoot, gitParentDirectory);
+        }
+        finally
+        {
+            Directory.Delete(tempRoot, recursive: true);
+        }
+    }
 }

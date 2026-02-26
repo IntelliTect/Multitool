@@ -71,7 +71,8 @@ public static class RepositoryPaths
         while (searchStartDirectory is not null)
         {
             DirectoryInfo[] subDirectories = searchStartDirectory.GetDirectories(".git");
-            if (subDirectories.Length > 0)
+            // Also check for a .git file (present in git worktrees as a gitfile pointer)
+            if (subDirectories.Length > 0 || File.Exists(Path.Combine(searchStartDirectory.FullName, ".git")))
             {
                 gitParentDirectory = searchStartDirectory.FullName;
                 return true;
