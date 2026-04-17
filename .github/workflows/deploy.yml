@@ -76,7 +76,7 @@ jobs:
       - name: Push NuGet
         run: dotnet nuget push IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
       - name: Upload nupkg to Releases
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           fail_on_unmatched_files: true
           generate_release_notes: true
