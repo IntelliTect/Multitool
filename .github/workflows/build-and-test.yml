@@ -37,6 +37,22 @@ jobs:
         trx-file-path: '${{ runner.temp }}/*.trx'
         output-directory: '${{ runner.temp }}/vsplaylists'
 
+  aot-test:
+    name: AOT publish test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        global-json-file: global.json
+    - name: Install NativeAOT prerequisites
+      run: sudo apt-get install -y clang zlib1g-dev
+    - name: Publish AOT
+      run: dotnet publish IntelliTect.Multitool.AotTest/IntelliTect.Multitool.AotTest.csproj -r linux-x64 -c Release
+    - name: Run AOT binary
+      run: ./IntelliTect.Multitool.AotTest/bin/Release/net8.0/linux-x64/publish/IntelliTect.Multitool.AotTest
+
   automerge:
     needs: [build-and-test]
     runs-on: ubuntu-latest
