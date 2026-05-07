@@ -40,6 +40,9 @@ jobs:
   aot-test:
     name: AOT publish test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
     - uses: actions/checkout@v6
     - name: Setup .NET
@@ -54,7 +57,7 @@ jobs:
       run: ./IntelliTect.Multitool.AotTest/bin/Release/net8.0/linux-x64/publish/IntelliTect.Multitool.AotTest
 
   automerge:
-    needs: [build-and-test]
+    needs: [build-and-test, aot-test]
     runs-on: ubuntu-latest
 
     permissions:
