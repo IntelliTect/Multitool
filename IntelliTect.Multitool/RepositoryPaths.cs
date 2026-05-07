@@ -43,7 +43,7 @@ public static class RepositoryPaths
             }
         }
         // Search from the project directory if we are live unit testing or if the initial search failed.
-        if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath) && projectPath is not null)
+        if (BuildVariables.TryGetValue("ProjectPath", out string? projectPath) && !string.IsNullOrWhiteSpace(projectPath))
         {
             searchStartDirectory = new FileInfo(projectPath).Directory;
             if (TrySearchForGitContainingDirectory(searchStartDirectory, out gitDirectory)
