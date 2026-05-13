@@ -22,8 +22,7 @@ public class ReleaseDateAttribute(string utcDateString) : Attribute
     /// <returns>The date time from the assembly attribute</returns>
     public static DateTime? GetReleaseDate(Assembly? assembly = null)
     {
-        object[]? attribute = (assembly ?? Assembly.GetEntryAssembly())?.GetCustomAttributes(typeof(ReleaseDateAttribute), false);
-        return attribute?.Length >= 1 ? ((ReleaseDateAttribute)attribute[0]).ReleaseDate : null;
+        return (assembly ?? Assembly.GetEntryAssembly())?.GetCustomAttribute<ReleaseDateAttribute>()?.ReleaseDate;
     }
 
 }

@@ -7,6 +7,7 @@
     <File Path="global.json" />
     <File Path="README.md" />
   </Folder>
+  <Project Path="IntelliTect.Multitool.AotTest/IntelliTect.Multitool.AotTest.csproj" />
   <Project Path="IntelliTect.Multitool.Tests/IntelliTect.Multitool.Tests.csproj" />
   <Project Path="IntelliTect.Multitool/IntelliTect.Multitool.csproj" />
 </Solution>
