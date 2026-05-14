@@ -24,7 +24,6 @@
 
     <Target Name="WriteLaunchers" AfterTargets="CopyFilesToOutputDirectory">
         <PropertyGroup>
-            <TempStagingPath Condition="'$(TempStagingPath)' == ''">$([System.IO.Path]::GetTempPath())</TempStagingPath>
             <LUTInformation>
                 BuildingForLiveUnitTesting::$(BuildingForLiveUnitTesting)
                 SolutionDir::$(SolutionDir)
@@ -32,7 +31,6 @@
             </LUTInformation>
         </PropertyGroup>
 
-        <WriteLinesToFile File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" Condition="'$(SolutionDir)' != ''" />
-        <WriteLinesToFile File="$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" Condition="'$(SolutionDir)' == '' AND !Exists('$(TempStagingPath)\IntelliTect.MultiTool.BuildVariables.tmp')" />
+        <WriteLinesToFile File="$(OutDir)IntelliTect.MultiTool.BuildVariables.tmp" Overwrite="true" Lines="$(LUTInformation)" />
     </Target>
 </Project>
