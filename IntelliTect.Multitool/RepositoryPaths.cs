@@ -15,7 +15,7 @@ public static class RepositoryPaths
     /// <summary>
     /// Holds the key value pairs of the build variables that this class can use.
     /// </summary>
-    public static ReadOnlyDictionary<string, string?> BuildVariables { get; } = new(File.ReadAllLines(Path.Combine(Path.GetTempPath(), BuildVariableFileName))
+    public static ReadOnlyDictionary<string, string?> BuildVariables { get; } = new(File.ReadAllLines(Path.Combine(AppContext.BaseDirectory, BuildVariableFileName))
         .Select(line => line.Split("::"))
         .ToDictionary(split => split[0].Trim(),
         split => !string.IsNullOrEmpty(split[1]) ? split[1].Trim() : null));

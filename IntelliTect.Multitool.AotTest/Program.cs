@@ -20,7 +20,7 @@ if (!slugOk || !urlOk || !filterOk || !attributeOk)
     return 1;
 }
 
-// RepositoryPaths is excluded: its static initializer reads a build-time temp file
+// RepositoryPaths is excluded: its static initializer reads a build-time file from the output directory
 // that doesn't exist at AOT runtime. The class is AOT-compatible (file I/O + LINQ only).
 
 Console.WriteLine("AOT test passed.");
