@@ -57,6 +57,8 @@ jobs:
       url: 'https://www.nuget.org/packages/IntelliTect.Multitool'
     permissions:
       id-token: write     # Required for OIDC token (NuGet trusted publishing)
+      attestations: write # Required for GitHub artifact attestations
+      artifact-metadata: write # Required to create artifact storage records
       contents: write     # Required for softprops/action-gh-release
     steps:
       - name: Download artifact from build job
@@ -68,6 +70,10 @@ jobs:
         run: |
           $tagVersion = "${{ github.ref }}".substring(11)
           echo "TAG_VERSION=$tagVersion" >> $env:GITHUB_OUTPUT
+      - name: Attest NuGet package provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg
       - name: NuGet login
         uses: NuGet/login@v1
         id: login
