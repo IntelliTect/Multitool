@@ -55,14 +55,3 @@ jobs:
       run: dotnet publish IntelliTect.Multitool.AotTest/IntelliTect.Multitool.AotTest.csproj -r linux-x64 -c Release
     - name: Run AOT binary
       run: ./IntelliTect.Multitool.AotTest/bin/Release/net8.0/linux-x64/publish/IntelliTect.Multitool.AotTest
-
-  automerge:
-    needs: [build-and-test, aot-test]
-    runs-on: ubuntu-latest
-
-    permissions:
-      pull-requests: write
-      contents: write
-
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v3.12.0  
