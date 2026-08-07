@@ -3,87 +3,191 @@ name: Deploy
 on:
   release:
     types: [published]
+  schedule:
+    - cron: '5 10 * * *'
+  workflow_dispatch:
 
 defaults:
   run:
     shell: pwsh
 
-env:
-  baseVersion: 1.0.0
-
 jobs:
-  build-and-test:
+  check-for-changes:
+    # Only run the change-check for nightly/manual triggers. Release triggers always proceed.
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
+    outputs:
+      changes: ${{ steps.check.outputs.changes }}
     steps:
-    - uses: actions/checkout@v7
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v6
-      with:
-        global-json-file: global.json
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Set Version
-      run: |
-        echo "${{ github.ref }}"
-        if ("${{ github.ref }}".startsWith("refs/tags/v")) {
-          $tagVersion = "${{ github.ref }}".substring(11)
-          echo "buildVersion=$tagVersion.${{ github.run_number }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "nugetVersion=$tagVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "preRelease=false" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        } else {
-          echo "buildVersion=${{ env.baseVersion }}.${{ github.run_number }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "nugetVersion=${{ env.baseVersion }}-ci${{ github.run_number }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        }
-    - name: Build
-      run: dotnet build -p:Version=${{ env.buildVersion }} -p:ReleaseDateAttribute=true -p:ContinuousIntegrationBuild=True --no-restore --configuration Release
-    - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal
-    - name: Pack
-      if: startsWith(github.ref, 'refs/tags/v')
-      run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration Release -o ${{env.DOTNET_ROOT}}/IntelliTect.MultitoolPack --no-build 
-    - name: Upload Artifacts
-      if: startsWith(github.ref, 'refs/tags/v')
-      uses: actions/upload-artifact@v7
-      with:
-        name: NuGet
-        path: ${{env.DOTNET_ROOT}}/IntelliTect.MultitoolPack
-      
-  deploy:
-    if: startsWith(github.ref, 'refs/tags/v')
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check for changes
+        id: check
+        run: |
+          if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
+            Write-Host "Event '$env:GITHUB_EVENT_NAME' detected - forcing build and deployment."
+            "changes=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          } else {
+            try {
+              # Get the latest published package metadata from NuGet registration.
+              # Avoid [System.Version] parsing because prerelease versions are not compatible with that type.
+              $packageInfo = Invoke-RestMethod -Uri "https://api.nuget.org/v3/registration5-gz-semver2/intellitect.multitool/index.json"
+              $registrationPages = @($packageInfo.items)
+              $registrationItems = @()
+              foreach ($page in $registrationPages) {
+                if ($null -ne $page.items) {
+                  $registrationItems += @($page.items)
+                } elseif ($null -ne $page.'@id') {
+                  $pageResponse = Invoke-RestMethod -Uri $page.'@id'
+                  foreach ($innerPage in @($pageResponse.items)) {
+                    if ($null -ne $innerPage.items) {
+                      $registrationItems += @($innerPage.items)
+                    }
+                  }
+                }
+              }
+
+              $publishedItems = $registrationItems | Where-Object { $null -ne $_.catalogEntry -and $null -ne $_.catalogEntry.published }
+              if (-not $publishedItems) {
+                throw "No published package entries were found in NuGet registration feed."
+              }
+
+              $latestPublishedItem = $publishedItems | Sort-Object { [DateTimeOffset]::Parse($_.catalogEntry.published).UtcDateTime } | Select-Object -Last 1
+              $lastPublishedDate = [DateTimeOffset]::Parse($latestPublishedItem.catalogEntry.published).UtcDateTime
+              Write-Host "Latest NuGet package version: $($latestPublishedItem.catalogEntry.version)"
+              Write-Host "Last published date (UTC): $lastPublishedDate"
+
+              # Get the latest commit date.
+              $latestCommitDate = [DateTimeOffset]::Parse((git log -1 --format=%cI)).UtcDateTime
+              Write-Host "Latest commit date (UTC): $latestCommitDate"
+
+              # Check if there are commits newer than the last published package
+              if ($latestCommitDate -gt $lastPublishedDate) {
+                Write-Host "Repository has changes newer than the last published package"
+                "changes=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+              } else {
+                Write-Host "No changes since last published package"
+                "changes=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+              }
+            } catch {
+              Write-Error "Failed to determine NuGet publish state for nightly deploy: $($_.Exception.Message)"
+              throw
+            }
+          }
+
+  build-test-pack:
+    # Run on release trigger (always), or on nightly/dispatch when changes were detected.
+    if: |
+      github.event_name == 'release' ||
+      needs.check-for-changes.outputs.changes == 'true'
+    name: Build, Test, and Pack
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [check-for-changes]
+    outputs:
+      nugetVersion: ${{ steps.set-version.outputs.nugetVersion }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Set Version
+        id: set-version
+        run: |
+          if ("${{ github.ref }}".startsWith("refs/tags/v")) {
+            # Release path: use the tag directly
+            $tagVersion = "${{ github.ref }}".substring(11)
+            $buildVersion = "$tagVersion.${{ github.run_number }}"
+            $nugetVersion = $tagVersion
+          } else {
+            # Nightly/dispatch path: git-describe + preview suffix
+            git fetch --tags
+            $tagVersion = & git describe --tags --abbrev=0 2>$null
+            if (-not $tagVersion) { $tagVersion = "v0.0.0" }
+            if ($tagVersion.StartsWith("v") -or $tagVersion.StartsWith("V")) {
+              $tagVersion = $tagVersion.Substring(1)
+            }
+            # Increment patch for nightly preview releases
+            $versionParts = $tagVersion.Split('.')
+            if ($versionParts.Length -ge 3) {
+              $major = [int]$versionParts[0]
+              $minor = [int]$versionParts[1]
+              $patch = [int]$versionParts[2] + 1
+              $tagVersion = "$major.$minor.$patch"
+            }
+            $date = Get-Date -AsUTC -Format "yyyyMMdd"
+            $buildVersion = "$tagVersion.${{ github.run_number }}"
+            $nugetVersion = "$tagVersion-preview.$date.${{ github.run_number }}"
+          }
+          echo "buildVersion=$buildVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "nugetVersion=$nugetVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "nugetVersion=$nugetVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Build
+        run: dotnet build -p:Version=${{ env.buildVersion }} -p:ReleaseDateAttribute=true -p:ContinuousIntegrationBuild=True --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal
+
+      - name: Pack
+        run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration Release -o ${{ github.workspace }}/IntelliTect.MultitoolPack --no-build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: NuGet
+          path: ${{ github.workspace }}/IntelliTect.MultitoolPack
+
+  deploy:
+    if: |
+      github.event_name == 'release' ||
+      needs.check-for-changes.outputs.changes == 'true'
+    runs-on: ubuntu-latest
+    needs: [check-for-changes, build-test-pack]
     environment:
       name: 'Production'
       url: 'https://www.nuget.org/packages/IntelliTect.Multitool'
     permissions:
-      id-token: write     # Required for OIDC token (NuGet trusted publishing)
-      attestations: write # Required for GitHub artifact attestations
-      artifact-metadata: write # Required to create artifact storage records
-      contents: write     # Required for softprops/action-gh-release
+      id-token: write      # Required for OIDC token (NuGet trusted publishing)
+      attestations: write  # Required for GitHub artifact attestations (release only)
+      artifact-metadata: write # Required to create artifact storage records (release only)
+      contents: write      # Required for softprops/action-gh-release (release only)
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v8
         with:
           name: NuGet
-      - name: Get tag version
-        id: tag-version
-        run: |
-          $tagVersion = "${{ github.ref }}".substring(11)
-          echo "TAG_VERSION=$tagVersion" >> $env:GITHUB_OUTPUT
+
       - name: Attest NuGet package provenance
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/attest@v4
         with:
-          subject-path: IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg
+          subject-path: IntelliTect.Multitool.${{ needs.build-test-pack.outputs.nugetVersion }}.nupkg
+
       - name: NuGet login
         uses: NuGet/login@v1
         id: login
         with:
           user: ${{ secrets.NUGET_USER }}
+
       - name: Push NuGet
-        run: dotnet nuget push IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
+        run: dotnet nuget push IntelliTect.Multitool.${{ needs.build-test-pack.outputs.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
+
       - name: Upload nupkg to Releases
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v3
         with:
           fail_on_unmatched_files: true
           generate_release_notes: true
-          files: IntelliTect.Multitool.${{ steps.tag-version.outputs.TAG_VERSION }}.nupkg
+          files: IntelliTect.Multitool.${{ needs.build-test-pack.outputs.nugetVersion }}.nupkg
