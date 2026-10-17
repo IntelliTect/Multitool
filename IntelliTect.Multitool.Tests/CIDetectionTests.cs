@@ -35,6 +35,7 @@ public class CIDetectionTests
     [InlineData("CIRCLECI", "true")]
     [InlineData("CONTINUOUS_INTEGRATION", "true")]
     [InlineData("TF_BUILD", "true")]
+    [InlineData("JB_SPACE_API_URL", "https://space.example")]
     [InlineData("TEAMCITY_VERSION", "1.0")]
     [InlineData("APPVEYOR", "True")]
     [InlineData("BuildRunner", "MyGet")]
@@ -46,6 +47,31 @@ public class CIDetectionTests
     {
         string ci = EvaluateCIProperty(new Dictionary<string, string> { [envVar] = value });
         Assert.Equal("true", ci);
+    }
+
+    [Theory]
+    [InlineData("BUILD_ID", "build", "BUILD_URL", "https://jenkins.example/build")]
+    [InlineData("BUILD_ID", "build", "PROJECT_ID", "project")]
+    [InlineData("CODEBUILD_BUILD_ID", "build", "AWS_REGION", "us-east-1")]
+    public void CiEnvVarPair_SetsCIPropertyToTrue(string firstEnvVar, string firstValue, string secondEnvVar, string secondValue)
+    {
+        string ci = EvaluateCIProperty(new Dictionary<string, string>
+        {
+            [firstEnvVar] = firstValue,
+            [secondEnvVar] = secondValue
+        });
+        Assert.Equal("true", ci);
+    }
+
+    [Theory]
+    [InlineData("BUILD_ID", "build")]
+    [InlineData("BUILD_URL", "https://jenkins.example/build")]
+    [InlineData("CODEBUILD_BUILD_ID", "build")]
+    [InlineData("AWS_REGION", "us-east-1")]
+    public void IncompleteCiEnvVarPair_DoesNotSetCIPropertyToTrue(string envVar, string value)
+    {
+        string ci = EvaluateCIProperty(new Dictionary<string, string> { [envVar] = value });
+        Assert.Equal("false", ci);
     }
 
     [Fact]
