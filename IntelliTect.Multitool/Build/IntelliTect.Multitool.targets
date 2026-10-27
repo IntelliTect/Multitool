@@ -7,9 +7,13 @@
                      '$(CIRCLECI)' == 'true' or
                      '$(CONTINUOUS_INTEGRATION)' == 'true' or
                      '$(TF_BUILD)' == 'true' or
+                     ('$(BUILD_ID)' != '' and '$(BUILD_URL)' != '') or
+                     ('$(BUILD_ID)' != '' and '$(PROJECT_ID)' != '') or
+                     ('$(CODEBUILD_BUILD_ID)' != '' and '$(AWS_REGION)' != '') or
                      '$(TEAMCITY_VERSION)' != '' or
                      '$(APPVEYOR)' != '' or
                      '$(BuildRunner)' == 'MyGet' or
+                     '$(JB_SPACE_API_URL)' != '' or
                      '$(JENKINS_URL)' != '' or
                      '$(TRAVIS)' == 'true' or
                      '$(BUDDY)' == 'true' or
